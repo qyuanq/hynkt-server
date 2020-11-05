@@ -22,21 +22,30 @@ module.exports = app => {
       comment: null,
       field: "name"
     },
-    province_id: {
+    county_id: {
       type: DataTypes.STRING(12),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "province_id"
+      field: "county_id"
+    },
+    city_id: {
+      type: DataTypes.STRING(12),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "city_id"
     }
   };
   const options = {
-    tableName: "province",
+    tableName: "county",
     comment: "",
     indexes: []
   };
-  const ProvinceModel = sequelize.define("province_model", attributes, options);
-  return ProvinceModel;
+  const CountyModel = sequelize.define("county_model", attributes, options);
+  return CountyModel;
 };
