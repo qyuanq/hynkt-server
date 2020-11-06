@@ -6,9 +6,15 @@ class cityController extends Controller {
      */
     async getProvince(){
         const {ctx,service} = this
+        let citys = await service.adress.getCity();
         let province = await service.adress.getProvinces();
-        ctx.body = province
-        console.log(province)
+        let proInfo = province.map((item,index) => {
+           return{
+               name:item.name,
+               city:citys[index]
+           }
+       })
+        ctx.body = proInfo
     }
 }
 module.exports = cityController
