@@ -9,6 +9,9 @@ module.exports = app => {
   router.post('/user', controller.user.create);
   router.post('/login',controller.user.login);
   router.post('/api/upload/single',jwt,controller.upload.create);
-  router.get('/api/getuser',controller.user.getuser);
-  router.get('/getProvince',controller.adress.getProvince);
+  router.get('/api/getuser',jwt,controller.user.getuser);
+  router.get('/api/getProvince',jwt,controller.adress.getProvince);
+  // 课程
+  router.get('/api/categorys',jwt,controller.course.getCategory);
+  router.get('/spe',controller.course.getSpe);
 };

@@ -10,6 +10,6 @@ module.exports = {
     },
     options: {
       type: "egg",
-      dir: "./app/model"
+      dir: "./app/model/models"
    }
   }

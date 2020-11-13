@@ -62,6 +62,21 @@ class UserController extends Controller{
         const user = await service.user.findById(id)
         ctx.body = user
     }
+
+    /**
+     * @summary 更新用户信息
+     * @description 更新用户信息
+     * @router post /api/updateUser
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async updateUser(){
+        const {ctx,service} = this;
+        const payload = ctx.request.body || {}
+        const id = ctx.state.user.data.id
+        const res = await service.user.update(id,payload)
+         ctx.helper.success({ctx, res})
+    }
 }
 
 module.exports = UserController

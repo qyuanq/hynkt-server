@@ -9,21 +9,24 @@ class AdressService extends Service {
     async getProvinces(){
         let province;  //省份信息
         province = await this.ctx.model.ProvinceModel.findAll();
-        return province
-    }
-    async getCity(){
-        let cityInfo = this.getCounty()
-        return cityInfo;
-    }
-    async getCounty(){
-        let citys = await this.ctx.model.CityModel.findAll();
-        return Promise.all(citys.map(async cut => {
-        let countys = await this.ctx.model.CountyModel.findAll({where: {city_id:cut.city_id}})
-        return{
-            name:cut.name,
-            city_id:cut.city_id,
-            county:countys
-        } 
+        return Promise.all(province.map(async item => {
+            // 获取城市信息
+            let citys = await this.ctx.model.CityModel.findAll({where:{province_id:item.province_id}});
+            citys = await Promise.all(citys.map(async item => {
+                console.log('id:',item.city_id)
+                // 获取区县信息
+                let countys = await this.ctx.model.CountyModel.findAll({where:{city_id:item.city_id}})
+                return {
+                    name:item.name,
+                    county:countys
+                }
+            }))
+            console.log(citys)
+            return {
+                name:item.name,
+                province_id:item.province_id,
+                city:citys
+            }
         }))
     }
 }

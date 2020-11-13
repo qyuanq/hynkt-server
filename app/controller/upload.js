@@ -42,8 +42,12 @@ class UploadController extends Controller{
             throw err
         }
         // 调用Service 进行业务处理
+        const id = ctx.state.user.data.id
+        const iconurl = `/public/uploads/${uuid}${extname}`
+        // 更新数据库
+        ctx.service.user.updateIcon(id,iconurl)
         // 设置响应内容和响应状态码
-        ctx.helper.success({ctx})
+        ctx.helper.success({ctx,res:iconurl})
     }
 }
 

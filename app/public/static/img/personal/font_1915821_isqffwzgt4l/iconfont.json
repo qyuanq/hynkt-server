@@ -1,0 +1,72 @@
+{
+  "id": "1915821",
+  "name": "personal",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "个人中心",
+  "glyphs": [
+    {
+      "icon_id": "1239334",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "566200",
+      "name": "提问",
+      "font_class": "tiwen",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "583015",
+      "name": "我的订单",
+      "font_class": "74wodedingdan",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "1166042",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "1311996",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "4518877",
+      "name": "咨询",
+      "font_class": "zixun",
+      "unicode": "e68d",
+      "unicode_decimal": 59021
+    },
+    {
+      "icon_id": "6684316",
+      "name": "邀请好友",
+      "font_class": "yaoqinghaoyou",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "8207762",
+      "name": "通知消息",
+      "font_class": "tongzhixiaoxi",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
+      "icon_id": "10031175",
+      "name": "电话联系",
+      "font_class": "dianhualianxi",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    }
+  ]
+}

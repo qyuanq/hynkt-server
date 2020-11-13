@@ -39,11 +39,21 @@ class UserService extends Service {
    */
   async update(_id, payload) {
     const { ctx, service } = this
-    const user = await ctx.service.user.find(_id)
+    const user = await service.user.findById(_id)
     if (!user) {
       ctx.throw(404, 'user not found')
     }
-    return ctx.model.User.findByIdAndUpdate(_id, payload)
+    return ctx.model.UsersModel.update(payload,{where:{id:_id}})
+  }
+
+  /**
+   * 修改用户头像
+   * @params {*} id
+   * @params {*} iconurl
+   */
+  async updateIcon(id,iconurl){
+    const {ctx} = this
+    return ctx.model.UsersModel.update({icon:iconurl},{where:{id:id}})
   }
 
   /**
