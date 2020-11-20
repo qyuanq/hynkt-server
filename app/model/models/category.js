@@ -19,29 +19,15 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "课程类别名  如教师资格证",
+      comment: "种类名称",
       field: "name"
-    },
-    speclalltyModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
-      field: "speclalltyModelId"
     }
   };
   const options = {
-    tableName: "classgory",
+    tableName: "category",
     comment: "",
-    indexes: [{
-      name: "speclalltyId",
-      unique: false,
-      type: "BTREE",
-      fields: ["speclalltyModelId"]
-    }]
+    indexes: []
   };
-  const ClassgoryModel = sequelize.define("classgory_model", attributes, options);
-  return ClassgoryModel;
+  const CategoryModel = sequelize.define("category_model", attributes, options);
+  return CategoryModel;
 };

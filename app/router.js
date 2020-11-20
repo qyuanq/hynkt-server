@@ -13,5 +13,10 @@ module.exports = app => {
   router.get('/api/getProvince',jwt,controller.adress.getProvince);
   // 课程
   router.get('/api/categorys',jwt,controller.course.getCategory);
-  router.get('/spe',controller.course.getSpe);
+  router.get('/api/classes/:id',jwt,controller.course.getClasses);
+  router.get('/goodVideos/:id',controller.course.getGoodVideo);
+  router.get('/cource/:id',controller.course.getCource)
+  router.get('/mealClass/:id',controller.course.getMealClass);
+  
+  router.get('/spe',controller.course.getCategory);
 };

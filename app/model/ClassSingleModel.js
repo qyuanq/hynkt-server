@@ -15,11 +15,11 @@ module.exports = app => {
     },
     name: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "套餐班名称",
+      comment: "单科班名字",
       field: "name"
     },
     retail_price: {
@@ -67,6 +67,15 @@ module.exports = app => {
       comment: "详情图",
       field: "detail_picture"
     },
+    Exam_time: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "考试时间",
+      field: "Exam_time"
+    },
     ground: {
       type: DataTypes.INTEGER(4),
       allowNull: true,
@@ -86,12 +95,12 @@ module.exports = app => {
       field: "hot"
     },
     label: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "套餐班标签",
+      comment: "标签",
       field: "label"
     },
     classgroup_id: {
@@ -100,12 +109,12 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "课程分类外键",
+      comment: "课程分类 外键",
       field: "classgroup_id"
     }
   };
   const options = {
-    tableName: "class_meal",
+    tableName: "class_single",
     comment: "",
     indexes: [{
       name: "classgroup_id",
@@ -114,6 +123,6 @@ module.exports = app => {
       fields: ["classgroup_id"]
     }]
   };
-  const ClassMealModel = sequelize.define("class_meal_model", attributes, options);
-  return ClassMealModel;
+  const ClassSingleModel = sequelize.define("class_single_model", attributes, options);
+  return ClassSingleModel;
 };
