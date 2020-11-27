@@ -17,6 +17,9 @@ module.exports = app => {
   router.get('/goodVideos/:id',controller.course.getGoodVideo);
   router.get('/cource/:id',controller.course.getCource)
   router.get('/mealClass/:id',controller.course.getMealClass);
-  
+  // 热门课程
+  router.get('/hotcources',controller.course.getHotCource);
+  // 教师
+  router.get('/teacher/:id',controller.teacher.getTeacher)
   router.get('/spe',controller.course.getCategory);
 };

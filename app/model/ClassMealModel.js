@@ -9,7 +9,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: false,
       comment: null,
       field: "id"
     },
@@ -76,15 +76,6 @@ module.exports = app => {
       comment: "是否上架",
       field: "ground"
     },
-    hot: {
-      type: DataTypes.INTEGER(4),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "是否热门",
-      field: "hot"
-    },
     label: {
       type: DataTypes.STRING(100),
       allowNull: true,
@@ -102,17 +93,40 @@ module.exports = app => {
       autoIncrement: false,
       comment: "课程分类外键",
       field: "classgroup_id"
+    },
+    classCode: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "课程代码",
+      field: "classCode",
+      unique: "classCode"
+    },
+    classHotModelId: {
+      type: DataTypes.INTEGER(4),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "是否热门 外键",
+      field: "classHotModelId"
+    },
+    hotSort: {
+      type: DataTypes.INTEGER(4),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "热门排序",
+      field: "hotSort"
     }
   };
   const options = {
     tableName: "class_meal",
     comment: "",
-    indexes: [{
-      name: "classgroup_id",
-      unique: false,
-      type: "BTREE",
-      fields: ["classgroup_id"]
-    }]
+    indexes: []
   };
   const ClassMealModel = sequelize.define("class_meal_model", attributes, options);
   return ClassMealModel;

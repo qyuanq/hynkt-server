@@ -25,11 +25,18 @@ class courseController extends Controller {
     async getClasses(){
         const {ctx,service} = this;
         const id = ctx.params.id || {};
+        //当前科目信息
+        const classGoryInfo = await service.course.getClassgory(id)
         // 单科班
         const single = await service.course.getClasses(id);
         // 全科班
         const meal = await service.course.getMealClass(id)
         const res = {
+            id:id,
+            conditions:classGoryInfo.conditions_model,
+            registratio:classGoryInfo.registratio_model,
+            examguide:classGoryInfo.examguide_model,
+            question:classGoryInfo.question_model,
             single:single,
             meal:meal
         } 
@@ -84,5 +91,17 @@ class courseController extends Controller {
         ctx.helper.success({ctx,res})
     }
 
+    /**
+     * @summary 获取热门课程
+     * @description 获取单科班套餐班热门课程
+     * @router get /api/hotcources
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async getHotCource(){
+        const {ctx,service} = this;
+        const res =  await service.course.getHotCource();
+        ctx.helper.success({ctx,res});
+    }
 }
 module.exports = courseController

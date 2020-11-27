@@ -42,6 +42,42 @@ class CourseService extends Service {
     }
 
     /**
+     * 获取当前课程类别下的所有信息
+     */
+    async getClassgory(id){
+        let ClassgoryModel = this.ctx.model.ClassgoryModel;
+        let ConditionsModel = this.ctx.model.ConditionsModel;
+        let RegistratioModel = this.ctx.model.RegistratioModel;
+        let ExamguideModel = this.ctx.model.ExamguideModel;
+        let QuestionModel = this.ctx.model.QuestionModel;
+        ClassgoryModel.hasOne(ConditionsModel);
+        ClassgoryModel.hasOne(RegistratioModel);
+        ClassgoryModel.hasOne(ExamguideModel);
+        ClassgoryModel.hasOne(QuestionModel);
+        ConditionsModel.belongsTo(ClassgoryModel);
+        RegistratioModel.belongsTo(ClassgoryModel);
+        ExamguideModel.belongsTo(ClassgoryModel);
+        QuestionModel.belongsTo(ClassgoryModel);
+
+       return await ClassgoryModel.findOne({
+            where: {id:id},
+            include:[
+                {model:ConditionsModel},
+                {model:RegistratioModel},
+                {model:ExamguideModel},
+                {model:QuestionModel}
+            ]
+        })
+        
+        // return {
+        //     conditions:res.conditions_model,
+        //     registration:res.registratio_model,
+        //     examGuide:res.examguide_model,
+        //     question:res.question_model
+        // }
+    }
+
+    /**
      * 获取单科课程班型
      */
     async getClasses(id){
@@ -117,6 +153,7 @@ class CourseService extends Service {
             include:[
                 {
                     model: ClassSingleModel,
+                    group:['label'],
                     include:[
                         {model:TeacherModel}
                     ]
@@ -124,6 +161,39 @@ class CourseService extends Service {
             ],
             where: {id:id}
         })
+    }
+
+    /**
+     * 获取热门课程
+     */
+    async getHotCource(){
+        let ClassSingleModel = this.ctx.model.ClassSingleModel;
+        let ClassMealModel = this.ctx.model.ClassMealModel;
+        let ClassHotModel = this.ctx.model.ClassHotModel;
+        ClassHotModel.hasMany(ClassSingleModel);
+        ClassSingleModel.belongsTo(ClassHotModel);
+        ClassHotModel.hasMany(ClassMealModel); 
+        ClassMealModel.belongsTo(ClassHotModel);
+
+        const res =  await this.ctx.model.ClassHotModel.findOne({
+            where: {hot:1},
+            include:[
+                {
+                    model:ClassSingleModel
+                },
+                {
+                    model:ClassMealModel
+                }
+            ]
+        })
+        const hotSingle = res.class_single_models;
+        const hotMeal = res.class_meal_models;
+        // console.log([...hotSingle,...hotMeal].sort()) 
+       //...解构；两个班型数组合并 并正序排序
+        return [...hotSingle,...hotMeal].sort((a,b)=>{
+            return a.hotSort - b.hotSort
+        });
+        
     }
 }
 

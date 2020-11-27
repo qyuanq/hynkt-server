@@ -9,39 +9,34 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: false,
       comment: null,
       field: "id"
     },
-    name: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "课程类别名  如教师资格证",
-      field: "name"
-    },
-    speclalltyModelId: {
+    ClassSingleModelId: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: null,
-      field: "speclalltyModelId"
+      comment: "课程id",
+      field: "ClassSingleModelId"
+    },
+    TeacherModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "老师id",
+      field: "TeacherModelId"
     }
   };
   const options = {
-    tableName: "classgory",
+    tableName: "teacheritem",
     comment: "",
-    indexes: [{
-      name: "speclalltyId",
-      unique: false,
-      type: "BTREE",
-      fields: ["speclalltyModelId"]
-    }]
+    indexes: []
   };
-  const ClassgoryModel = sequelize.define("classgory_model", attributes, options);
-  return ClassgoryModel;
+  const TeacheritemModel = sequelize.define("teacheritem_model", attributes, options);
+  return TeacheritemModel;
 };
