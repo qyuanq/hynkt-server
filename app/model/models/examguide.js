@@ -10,51 +10,51 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
-      comment: "订单编号",
+      comment: null,
       field: "id"
     },
     name: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
+      type: DataTypes.STRING(32),
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "订单名称",
+      comment: "考试指南标题",
       field: "name"
     },
-    price: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "实付价格",
-      field: "price"
-    },
-    time: {
+    date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "订单时间",
-      field: "time"
+      comment: "发表时间",
+      field: "date"
     },
-    status: {
-      type: DataTypes.INTEGER(4),
-      allowNull: false,
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "订单状态",
-      field: "status"
+      comment: "html字符串模板",
+      field: "content"
+    },
+    ClassgoryModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "课程分类id 外键",
+      field: "ClassgoryModelId"
     }
   };
   const options = {
-    tableName: "orders",
+    tableName: "examguide",
     comment: "",
     indexes: []
   };
-  const OrdersModel = sequelize.define("orders_model", attributes, options);
-  return OrdersModel;
+  const ExamguideModel = sequelize.define("examguide_model", attributes, options);
+  return ExamguideModel;
 };

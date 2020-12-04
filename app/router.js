@@ -11,6 +11,8 @@ module.exports = app => {
   router.post('/api/upload/single',jwt,controller.upload.create);
   router.get('/api/getuser',jwt,controller.user.getuser);
   router.get('/api/getProvince',jwt,controller.adress.getProvince);
+  // 用户课程
+  router.get('/api/myCources/:id',jwt,controller.user.userCource);
   // 课程
   router.get('/api/categorys',jwt,controller.course.getCategory);
   router.get('/api/classes/:id',jwt,controller.course.getClasses);
@@ -22,4 +24,7 @@ module.exports = app => {
   // 教师
   router.get('/teacher/:id',controller.teacher.getTeacher)
   router.get('/spe',controller.course.getCategory);
+
+  // 支付
+  router.get('/pay/wx',controller.pay.wxpay)
 };

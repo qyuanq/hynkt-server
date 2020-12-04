@@ -68,13 +68,6 @@ class CourseService extends Service {
                 {model:QuestionModel}
             ]
         })
-        
-        // return {
-        //     conditions:res.conditions_model,
-        //     registration:res.registratio_model,
-        //     examGuide:res.examguide_model,
-        //     question:res.question_model
-        // }
     }
 
     /**
@@ -148,12 +141,10 @@ class CourseService extends Service {
         let TeacheritemModel = this.ctx.model.TeacheritemModel;
         ClassSingleModel.belongsToMany(TeacherModel,{through:TeacheritemModel})
         TeacherModel.belongsToMany(ClassSingleModel,{through:TeacheritemModel})
-        // return await ClassMealModel.findAll({where: {id:id}})
         return await ClassMealModel.findOne({
             include:[
                 {
                     model: ClassSingleModel,
-                    group:['label'],
                     include:[
                         {model:TeacherModel}
                     ]

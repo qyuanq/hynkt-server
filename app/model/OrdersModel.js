@@ -10,17 +10,17 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: true,
       autoIncrement: false,
-      comment: "订单编号",
+      comment: "主键",
       field: "id"
     },
-    name: {
+    orderCode: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "订单名称",
-      field: "name"
+      comment: "订单编号",
+      field: "orderCode"
     },
     price: {
       type: DataTypes.DECIMAL,
@@ -46,8 +46,17 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "订单状态",
+      comment: "订单状态(未支付 已支付)",
       field: "status"
+    },
+    UsersModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "用户id  外键",
+      field: "UsersModelId"
     }
   };
   const options = {

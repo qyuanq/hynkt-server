@@ -53,7 +53,32 @@ class UserService extends Service {
    */
   async updateIcon(id,iconurl){
     const {ctx} = this
-    return ctx.model.UsersModel.update({icon:iconurl},{where:{id:id}})
+    return await ctx.model.UsersModel.update({icon:iconurl},{where:{id:id}})
+  }
+
+  /**
+   * 查看用户课程
+   * @param {*} id 
+   */
+  async userCource(id){
+    let ClassSingleModel = this.ctx.model.ClassSingleModel;
+    let ClassMealModel = this.ctx.model.ClassMealModel;
+    let CourceitemsModel = this.ctx.model.CourceitemsModel;
+    let UsersModel = this.ctx.model.UsersModel;
+
+    ClassSingleModel.belongsToMany(UsersModel,{through:CourceitemsModel})
+    UsersModel.belongsToMany(ClassSingleModel,{through:CourceitemsModel})
+    ClassMealModel.belongsToMany(UsersModel,{through:CourceitemsModel})
+    UsersModel.belongsToMany(ClassMealModel,{through:CourceitemsModel})
+
+    return await UsersModel.findOne({
+      include:[
+        {model:ClassSingleModel},
+        {model:ClassMealModel}
+      ],
+      attributes:['username'],
+      where:{id:id}
+    })
   }
 
   /**

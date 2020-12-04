@@ -77,6 +77,21 @@ class UserController extends Controller{
         const res = await service.user.update(id,payload)
          ctx.helper.success({ctx, res})
     }
+
+    /**
+     * @summary 获取用户课程
+     * @description 获取用户课程
+     * @router get /api/myCources
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async userCource(){
+        const {ctx,service} = this;
+        // 获取get 传递的参数
+        const id = ctx.state.user.data.id;
+        const res = await service.user.userCource(id);
+        ctx.helper.success({ctx,res})
+    }
 }
 
 module.exports = UserController
