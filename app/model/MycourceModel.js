@@ -15,37 +15,28 @@ module.exports = app => {
     },
     usersModelId: {
       type: DataTypes.INTEGER(16),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户主键  ",
+      comment: "用户主键 外键",
       field: "usersModelId"
     },
-    classMealModelId: {
-      type: DataTypes.INTEGER(16),
+    date: {
+      type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "套餐班主键",
-      field: "classMealModelId"
-    },
-    classSingleModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "单科班主键",
-      field: "classSingleModelId"
+      comment: "课程加入时间",
+      field: "date"
     }
   };
   const options = {
-    tableName: "courceitems",
+    tableName: "mycource",
     comment: "",
     indexes: []
   };
-  const CourceitemsModel = sequelize.define("courceitems_model", attributes, options);
-  return CourceitemsModel;
+  const MycourceModel = sequelize.define("mycource_model", attributes, options);
+  return MycourceModel;
 };

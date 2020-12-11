@@ -1,4 +1,5 @@
 const Service = require('egg').Service
+const moment = require('moment')
 
 class UserService extends Service {
   
@@ -62,22 +63,79 @@ class UserService extends Service {
    */
   async userCource(id){
     let ClassSingleModel = this.ctx.model.ClassSingleModel;
-    let ClassMealModel = this.ctx.model.ClassMealModel;
     let CourceitemsModel = this.ctx.model.CourceitemsModel;
+    let MycourceModel = this.ctx.model.MycourceModel;
     let UsersModel = this.ctx.model.UsersModel;
+  
+    ClassSingleModel.belongsToMany(MycourceModel,{through:CourceitemsModel})
+    MycourceModel.belongsToMany(ClassSingleModel,{through:CourceitemsModel})
+    UsersModel.hasMany(MycourceModel);
+    MycourceModel.belongsTo(UsersModel);
 
-    ClassSingleModel.belongsToMany(UsersModel,{through:CourceitemsModel})
-    UsersModel.belongsToMany(ClassSingleModel,{through:CourceitemsModel})
-    ClassMealModel.belongsToMany(UsersModel,{through:CourceitemsModel})
-    UsersModel.belongsToMany(ClassMealModel,{through:CourceitemsModel})
-
-    return await UsersModel.findOne({
+    let noverCource=[];
+    let overdueCource=[];
+    let userCource =  await UsersModel.findOne({
       include:[
-        {model:ClassSingleModel},
-        {model:ClassMealModel}
+        {
+          model:MycourceModel,
+          attributes:['date'],
+          where:{usersModelId : id},
+          include:[
+            {
+              model:ClassSingleModel,
+              attributes:['id','head_picture','name','label','classCode','classgroup_id','validity']
+            }
+          ]
+        }
       ],
       attributes:['username'],
       where:{id:id}
+    });
+
+    // async function setCource(item,cource){
+    //   if(item.class_meal_models.length > 0){
+    //     cource.push({...item.class_meal_models});
+    //   }else if(item.class_single_models.length > 0){ 
+    //     cource.push({...item.class_single_models});
+    //   }
+    // }
+    let mycources = userCource.mycource_models.map(item => {
+      if(item){
+        // 获取当前时间
+        let dateEnd = moment(new Date());
+        // 课程加入时间
+        let dateBegin = moment(item.date);
+        // 比对时间相差天
+        let dayDiff = dateEnd.diff(dateBegin,'days');
+        if(dayDiff <= 365){
+          // 未过期课程
+          noverCource.push({...item.class_single_models});
+        }else{
+          // 过期续费课程
+          overdueCource.push({...item.class_single_models});
+        }
+
+        console.log(dateEnd,dateBegin,item.date,'时间戳',dayDiff)
+        return {...item.class_single_models}
+      }
+    })
+  console.log('未过期',noverCource,'过期',overdueCource);
+    return  {
+        mycources:mycources,
+        noverCource:noverCource,
+        overdueCource:overdueCource
+      };
+  }
+
+  /**
+  * 查看考试时间和课程专业名称
+  * @param {*} classgroup_id
+  */
+  async userClassgory(classgroup_id){
+  let ClassgoryModel = this.ctx.model.ClassgoryModel;
+   return await ClassgoryModel.findOne({
+      where: {id : classgroup_id},
+      attributes:['name','Exam_time']
     })
   }
 

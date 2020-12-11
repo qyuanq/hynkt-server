@@ -13,23 +13,14 @@ module.exports = app => {
       comment: null,
       field: "id"
     },
-    usersModelId: {
+    mycourceModelId: {
       type: DataTypes.INTEGER(16),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户主键  ",
-      field: "usersModelId"
-    },
-    classMealModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "套餐班主键",
-      field: "classMealModelId"
+      comment: "我的课程主键  ",
+      field: "mycourceModelId"
     },
     classSingleModelId: {
       type: DataTypes.INTEGER(16),

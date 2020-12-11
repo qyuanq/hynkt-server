@@ -92,6 +92,20 @@ class UserController extends Controller{
         const res = await service.user.userCource(id);
         ctx.helper.success({ctx,res})
     }
+
+    /**
+     * @summary 获取用户所属专业
+     * @description 获取用户所属专业
+     * @router get /api/myClassgory
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async userClassgory(){
+        const {ctx,service} = this;
+        const id = ctx.params.id || {};
+        const res = await service.user.userClassgory(id);
+        ctx.helper.success({ctx,res}); 
+    }
 }
 
 module.exports = UserController

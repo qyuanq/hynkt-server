@@ -67,15 +67,6 @@ module.exports = app => {
       comment: "详情图",
       field: "detail_picture"
     },
-    Exam_time: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "考试时间",
-      field: "Exam_time"
-    },
     ground: {
       type: DataTypes.INTEGER(4),
       allowNull: true,
