@@ -13,6 +13,10 @@ module.exports = app => {
   router.get('/api/getProvince',jwt,controller.adress.getProvince);
   // 用户课程
   router.get('/api/myCources/:id',jwt,controller.user.userCource);
+  // 用户学习进度
+  router.get('/myProgress/:id',controller.user.userProgress);
+  // 更新用户学习进度
+  router.post('/updateProgress',controller.user.updateProgress);
   // 用户专业
   router.get('/api/myClassgory/:id',jwt,controller.user.userClassgory);
   // 课程

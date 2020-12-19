@@ -30,6 +30,60 @@ module.exports = app => {
       autoIncrement: false,
       comment: "课程加入时间",
       field: "date"
+    },
+    sec_selected: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "章节索引",
+      field: "sec_selected"
+    },
+    vid_selected: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "视频索引",
+      field: "vid_selected"
+    },
+    vid_title: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "当前标题",
+      field: "vid_title"
+    },
+    currentTime: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "当前播放位置",
+      field: "currentTime"
+    },
+    proarr: {
+      type: DataTypes.STRING(1024),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "已播放进度数组",
+      field: "proarr"
+    },
+    currentCource: {
+      type: DataTypes.INTEGER(4),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "当前课程位置",
+      field: "currentCource"
     }
   };
   const options = {

@@ -78,7 +78,7 @@ class UserService extends Service {
       include:[
         {
           model:MycourceModel,
-          attributes:['date'],
+          attributes:['id','date','sec_selected','vid_selected','vid_title','currentTime','proarr'],
           where:{usersModelId : id},
           include:[
             {
@@ -92,13 +92,6 @@ class UserService extends Service {
       where:{id:id}
     });
 
-    // async function setCource(item,cource){
-    //   if(item.class_meal_models.length > 0){
-    //     cource.push({...item.class_meal_models});
-    //   }else if(item.class_single_models.length > 0){ 
-    //     cource.push({...item.class_single_models});
-    //   }
-    // }
     let mycources = userCource.mycource_models.map(item => {
       if(item){
         // 获取当前时间
@@ -109,14 +102,14 @@ class UserService extends Service {
         let dayDiff = dateEnd.diff(dateBegin,'days');
         if(dayDiff <= 365){
           // 未过期课程
-          noverCource.push({...item.class_single_models});
+          noverCource.push(item);
         }else{
           // 过期续费课程
-          overdueCource.push({...item.class_single_models});
+          overdueCource.push(item);
         }
 
         console.log(dateEnd,dateBegin,item.date,'时间戳',dayDiff)
-        return {...item.class_single_models}
+        return {item}
       }
     })
   console.log('未过期',noverCource,'过期',overdueCource);
@@ -124,7 +117,33 @@ class UserService extends Service {
         mycources:mycources,
         noverCource:noverCource,
         overdueCource:overdueCource
+        // userCource
       };
+  }
+
+  /**
+   * 查看用户课程学习进度
+   * @param {*} id 
+   */
+  async userProgress(id){
+    let MycourceModel = this.ctx.model.MycourceModel;
+    return await MycourceModel.findOne({
+      where: {id:id},
+      attributes:['sec_selected','vid_selected','vid_title','currentTime','proarr']
+    })
+  } 
+
+  /**
+   * 更新用户课程学习进度
+   * @param {*} arr
+   * @param {*} id
+   */
+  async updateProgress(arr,id){
+    let MycourceModel = this.ctx.model.MycourceModel;
+    return await MycourceModel.update(
+      {proarr: arr},
+      {where: {id:id}}
+    )
   }
 
   /**

@@ -94,6 +94,36 @@ class UserController extends Controller{
     }
 
     /**
+     * @summary 查看用户学习进度
+     * @description 查看用户学习进度
+     * @router get /api/myProgress
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async userProgress(){
+        const {ctx,service} = this;
+        const id = ctx.params.id || {};
+        const res = await service.user.userProgress(id);
+        ctx.helper.success({ctx,res});
+    }
+
+    /**
+     * @summary 更新用户学习进度
+     * @description 更新用户学习进度
+     * @router get /api/updateProgress
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async updateProgress(){
+        const {ctx,service} = this;
+        const data = ctx.request.body || {};
+        console.log('data',data);
+        const res= await service.user.updateProgress(data.arr,data.id);
+        console.log(res);
+        ctx.helper.success({ctx,res});
+    }
+
+    /**
      * @summary 获取用户所属专业
      * @description 获取用户所属专业
      * @router get /api/myClassgory

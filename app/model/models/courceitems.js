@@ -13,30 +13,30 @@ module.exports = app => {
       comment: null,
       field: "id"
     },
-    usersModelId: {
+    mycourceModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "我的课程主键  ",
+      field: "mycourceModelId"
+    },
+    classSingleModelId: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户主键 外键",
-      field: "usersModelId"
-    },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "课程加入时间",
-      field: "date"
+      comment: "单科班主键",
+      field: "classSingleModelId"
     }
   };
   const options = {
-    tableName: "mycource",
+    tableName: "courceitems",
     comment: "",
     indexes: []
   };
-  const MycourceModel = sequelize.define("mycource_model", attributes, options);
-  return MycourceModel;
+  const CourceitemsModel = sequelize.define("courceitems_model", attributes, options);
+  return CourceitemsModel;
 };
