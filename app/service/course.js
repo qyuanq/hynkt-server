@@ -61,6 +61,7 @@ class CourseService extends Service {
 
        return await ClassgoryModel.findOne({
             where: {id:id},
+            attributes:['name'],
             include:[
                 {model:ConditionsModel},
                 {model:RegistratioModel},

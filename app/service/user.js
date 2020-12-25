@@ -138,11 +138,11 @@ class UserService extends Service {
    * @param {*} arr
    * @param {*} id
    */
-  async updateProgress(arr,id){
+  async updateProgress(data){
     let MycourceModel = this.ctx.model.MycourceModel;
     return await MycourceModel.update(
-      {proarr: arr},
-      {where: {id:id}}
+      data,
+      {where: {id:data.id}}
     )
   }
 

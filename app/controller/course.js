@@ -33,6 +33,7 @@ class courseController extends Controller {
         const meal = await service.course.getMealClass(id)
         const res = {
             id:id,
+            name:classGoryInfo.name,
             conditions:classGoryInfo.conditions_model,
             registratio:classGoryInfo.registratio_model,
             examguide:classGoryInfo.examguide_model,

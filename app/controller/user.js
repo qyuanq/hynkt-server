@@ -118,7 +118,7 @@ class UserController extends Controller{
         const {ctx,service} = this;
         const data = ctx.request.body || {};
         console.log('data',data);
-        const res= await service.user.updateProgress(data.arr,data.id);
+        const res= await service.user.updateProgress(data);
         console.log(res);
         ctx.helper.success({ctx,res});
     }
