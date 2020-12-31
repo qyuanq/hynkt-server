@@ -29,6 +29,12 @@ module.exports = app => {
   router.get('/api/answerQuestions/:id',jwt,controller.answerQuestion.getQuestion);
   // 创建课程答疑
   router.post('/api/answerQuestion',jwt,controller.upload.uploadQuestion);
+  // 点赞
+  router.get('/api/like',jwt,controller.praise.onLike);
+  // 是否点赞状态
+  router.get('/api/isLike',jwt,controller.praise.isLike);
+  // 获取答疑问题
+  router.get('/api/comments/:id',jwt,controller.comments.getComments);
   // 热门课程
   router.get('/hotcources',controller.course.getHotCource);
   // 教师
