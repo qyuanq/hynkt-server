@@ -19,7 +19,7 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "二级回复内容",
+      comment: "回复内容",
       field: "content"
     },
     date: {
@@ -31,23 +31,14 @@ module.exports = app => {
       comment: "回复时间",
       field: "date"
     },
-    ReplayParentModelId: {
+    CommentsModelId: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "一级评论Id",
-      field: "ReplayParentModelId"
-    },
-    to_user_id: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "回复哪个用户的",
-      field: "to_user_id"
+      comment: "根评论id 外键",
+      field: "CommentsModelId"
     },
     UsersModelId: {
       type: DataTypes.INTEGER(16),
@@ -55,15 +46,47 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "哪个用户回复的",
+      comment: "谁回复的",
       field: "UsersModelId"
+    },
+    to_user_id: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "回复谁的",
+      field: "to_user_id"
+    },
+    level: {
+      type: DataTypes.INTEGER(4),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "一二级回复标识",
+      field: "level"
+    },
+    praise: {
+      type: DataTypes.INTEGER(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "点赞",
+      field: "praise"
     }
   };
   const options = {
-    tableName: "replay_child",
+    tableName: "replay",
     comment: "",
     indexes: []
   };
-  const ReplayChildModel = sequelize.define("replay_child_model", attributes, options);
-  return ReplayChildModel;
+  const ReplayModel = sequelize.define("replay_model", attributes, options);
+  ReplayModel.associate = function(){
+    app.model.ReplayModel.belongsTo(app.model.UsersModel,{as:'users_model',foreignKey:'UsersModelId',targetKey:'id'});
+    app.model.ReplayModel.belongsTo(app.model.UsersModel,{as:'to_user',foreignKey:'to_user_id',targetKey:'id'});
+    app.model.ReplayModel.belongsTo(app.model.CommentsModel,{as:'comments_model',foreignKey:'CommentsModelId'})
+  }
+  return ReplayModel;
 };

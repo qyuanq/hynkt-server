@@ -35,6 +35,10 @@ module.exports = app => {
   router.get('/api/isLike',jwt,controller.praise.isLike);
   // 获取答疑问题
   router.get('/api/comments/:id',jwt,controller.comments.getComments);
+  // 添加答疑问题
+  router.post('/api/comments',jwt,controller.comments.addComments);
+  // 获取一级评论
+  router.get('/api/replays/:commentId',jwt,controller.comments.getReplay);
   // 热门课程
   router.get('/hotcources',controller.course.getHotCource);
   // 教师

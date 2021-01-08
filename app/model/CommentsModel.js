@@ -9,7 +9,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
       field: "id"
     },
@@ -56,5 +56,9 @@ module.exports = app => {
     indexes: []
   };
   const CommentsModel = sequelize.define("comments_model", attributes, options);
+  CommentsModel.associate = function(){
+    app.model.CommentsModel.belongsTo(app.model.UsersModel);
+    app.model.CommentsModel.hasMany(app.model.ReplayModel)
+  }
   return CommentsModel;
 };

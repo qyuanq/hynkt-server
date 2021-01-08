@@ -74,5 +74,9 @@ module.exports = app => {
     indexes: []
   };
   const UsersModel = sequelize.define("users_model", attributes, options);
+  UsersModel.associate = function(){
+    app.model.UsersModel.hasMany(app.model.ReplayModel);
+    app.model.UsersModel.hasMany(app.model.CommentsModel);
+  }
   return UsersModel;
 };

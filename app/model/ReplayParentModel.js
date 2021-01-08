@@ -9,7 +9,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
       field: "id"
     },
@@ -40,14 +40,23 @@ module.exports = app => {
       comment: "评论Id 外键",
       field: "CommentsModelId"
     },
-    UserModelId: {
+    to_user_id: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户Id 外键",
-      field: "UserModelId"
+      comment: "回复哪个用户的",
+      field: "to_user_id"
+    },
+    UsersModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "哪个用户回复的",
+      field: "UsersModelId"
     }
   };
   const options = {
