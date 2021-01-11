@@ -30,6 +30,24 @@ module.exports = app => {
       autoIncrement: false,
       comment: "用户id 外键",
       field: "UsersModelId"
+    },
+    CommentsModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "评论id 外键",
+      field: "CommentsModelId"
+    },
+    RepalyModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "回复id 外键",
+      field: "RepalyModelId"
     }
   };
   const options = {

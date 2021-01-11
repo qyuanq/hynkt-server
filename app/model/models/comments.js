@@ -48,6 +48,15 @@ module.exports = app => {
       autoIncrement: false,
       comment: "评论时间",
       field: "date"
+    },
+    praise: {
+      type: DataTypes.INTEGER(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "评论点赞总量",
+      field: "praise"
     }
   };
   const options = {

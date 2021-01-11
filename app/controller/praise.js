@@ -11,8 +11,20 @@ class praiseController extends Controller{
     async onLike(){
         const {ctx,service} = this;
         const userId = ctx.query.userId;
-        const anserQuestionId = ctx.query.anserQuestionId;
-        let res = await service.praise.onLike(userId,anserQuestionId);
+        let res;
+        if(ctx.query.anserQuestionId){
+            // 答疑点赞
+            const anserQuestionId = ctx.query.anserQuestionId;
+            res = await service.praise.onLike(userId,anserQuestionId,'anserQuestionId');
+        }else if(ctx.query.commentId){
+            // 评论点赞
+            const commentId = ctx.query.commentId;
+            res = await service.praise.onLike(userId,commentId,'commentId');
+        }else if(ctx.query.replayId){
+            // 回复点赞
+            const replayId = ctx.query.replayId;
+            res = await service.praise.onLike(userId,replayId,'replayId');
+        }
         ctx.helper.success({ctx,res});
     }
 
@@ -26,8 +38,20 @@ class praiseController extends Controller{
     async isLike(){
         const {ctx,service} = this;
         const userId = ctx.query.userId;
-        const anserQuestionId = ctx.query.anserQuestionId;
-        let res = await service.praise.isLike(userId,anserQuestionId);
+        let res;
+        if(ctx.query.anserQuestionId){
+            // 答疑点赞状态
+            const anserQuestionId = ctx.query.anserQuestionId;
+            res = await service.praise.isLike(userId,anserQuestionId,'anserQuestionId');
+        }else if(ctx.query.commentId){
+            // 评论点赞状态
+            const commentId = ctx.query.commentId;
+            res = await service.praise.isLike(userId,commentId,'commentId');
+        }else if(ctx.query.replayId){
+            // 回复点赞状态
+            const replayId = ctx.query.replayId;
+            res = await service.praise.isLike(userId,replayId,'replayId');
+        }
         ctx.helper.success({ctx,res}); 
     }
 }

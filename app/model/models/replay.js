@@ -13,31 +13,13 @@ module.exports = app => {
       comment: null,
       field: "id"
     },
-    AnserquestionModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "答疑主键  外键",
-      field: "AnserquestionModelId"
-    },
-    UsersModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "用户主键 外键",
-      field: "UsersModelId"
-    },
     content: {
-      type: DataTypes.STRING(1024),
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "评论内容",
+      comment: "回复内容",
       field: "content"
     },
     date: {
@@ -46,8 +28,44 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "评论时间",
+      comment: "回复时间",
       field: "date"
+    },
+    CommentsModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "根评论id 外键",
+      field: "CommentsModelId"
+    },
+    UsersModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "谁回复的",
+      field: "UsersModelId"
+    },
+    to_user_id: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "回复谁的",
+      field: "to_user_id"
+    },
+    level: {
+      type: DataTypes.INTEGER(4),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "一二级回复标识",
+      field: "level"
     },
     praise: {
       type: DataTypes.INTEGER(255),
@@ -55,19 +73,15 @@ module.exports = app => {
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "评论点赞总量",
+      comment: "点赞",
       field: "praise"
     }
   };
   const options = {
-    tableName: "comments",
+    tableName: "replay",
     comment: "",
     indexes: []
   };
-  const CommentsModel = sequelize.define("comments_model", attributes, options);
-  CommentsModel.associate = function(){
-    app.model.CommentsModel.belongsTo(app.model.UsersModel);
-    app.model.CommentsModel.hasMany(app.model.ReplayModel)
-  }
-  return CommentsModel;
+  const ReplayModel = sequelize.define("replay_model", attributes, options);
+  return ReplayModel;
 };
