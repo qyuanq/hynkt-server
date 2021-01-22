@@ -1,4 +1,5 @@
 const Service = require('egg').Service;
+const sequelize = require('sequelize');
 
 class praiseService extends Service{
     /**
@@ -9,65 +10,50 @@ class praiseService extends Service{
     async onLike(userId,CommentId,commentLabel){
         let PraiseModel = this.ctx.model.PraiseModel;
         let AnserquestionModel = this.ctx.model.AnserquestionModel; 
-        let CommentModel = this.ctx.model.CommentModel;
+        let CommentsModel = this.ctx.model.CommentsModel;
         let ReplayModel = this.ctx.model. ReplayModel;
         let row;
         let res;
-
+        CommentId = parseInt(CommentId);
         if(commentLabel === 'anserQuestionId'){
-            this.likes(AnserquestionModel,{AnserquestionModelId:CommentId});
-            // row = await PraiseModel.findAll({
-            //     where: {UsersModelId:userId,AnserquestionModelId:CommentId}
-            // });
-            // res = await AnserquestionModel.findOne({
-            //     attributes:['praise'],
-            //     where: {id:CommentId}
-            // });
-            // let praise = res.praise;
-            // console.log('praise',praise)
-            // // 取消点赞
-            // if(row.length > 0){
-            //     // 取消点赞
-            //     await PraiseModel.destroy({where: {UsersModelId:userId,AnserquestionModelId:anserQuestionId}})
-            //     //修改 总数 - 1
-            //     await AnserquestionModel.update({praise:praise - 1},{where: {id:anserQuestionId}});
-            // }else{
-            //     // 点赞
-            //     await PraiseModel.create({UsersModelId:userId,AnserquestionModelId:anserQuestionId})
-            //     //总数 + 1
-            //     await AnserquestionModel.update({praise:praise + 1},{where: {id:anserQuestionId}});
-            // }
+           likes(AnserquestionModel,'AnserquestionModelId',null,null,CommentId);
         }else if(commentLabel === 'commentId'){
-            // row = await PraiseModel.findAll({
-            //     where: {UsersModelId:userId,CommentsModelId:CommentId}
-            // });
-            this.likes(CommentModel,{CommentsModelId:CommentId});
+            likes(CommentsModel,null,'CommentsModelId',null,CommentId);
         }else if(commentLabel === 'replayId'){
-            // row = await PraiseModel.findAll({
-            //     where: {UsersModelId:userId,RepalyModelId:CommentId}
-            // });
-            this.likes(ReplayModel,{RepalyModelId:CommentId});
+            likes(ReplayModel,null,null,'RepalyModelId',CommentId);
         }
 
-        async function likes(model,modelId){
+        async function likes(model,AnserquestionModelId,CommentsModelId,RepalyModelId,CommentId){
+            let json;
+            if(AnserquestionModelId){
+                // 答疑，修改where动态条件
+                json = {UsersModelId:userId,AnserquestionModelId:CommentId}
+            }else if(CommentsModelId){
+                // 评论 修改where动态条件
+                json = {UsersModelId:userId,CommentsModelId:CommentId}
+            }else if(RepalyModelId){
+                // 回复 修改where动态条件
+                json = {UsersModelId:userId,RepalyModelId:CommentId}
+            }
+            // 是否有该点赞记录
             row = await PraiseModel.findAll({
-                where: {UsersModelId:userId,modelId}
+                where: json
             });
+            // 获取praise点赞总数
             res = await model.findOne({
                 attributes:['praise'],
                 where: {id:CommentId}
             });
             let praise = res.praise;
-            console.log('praise',praise)
             // 取消点赞
             if(row.length > 0){
                 // 取消点赞
-                await PraiseModel.destroy({where: {UsersModelId:userId,modelId}})
+                await PraiseModel.destroy({where: json})
                 //修改 总数 - 1
                 await model.update({praise:praise - 1},{where: {id:CommentId}});
             }else{
                 // 点赞
-                await PraiseModel.create({UsersModelId:userId,modelId})
+                await PraiseModel.create(json)
                 //总数 + 1
                 await model.update({praise:praise + 1},{where: {id:CommentId}});
             }
@@ -82,17 +68,24 @@ class praiseService extends Service{
     async isLike(userId,commentId,commentLabel){
         let PraiseModel = this.ctx.model.PraiseModel;
         let row;
+        let conditions; //where动态条件
         if(commentLabel === 'anserQuestionId'){
-            row = await PraiseModel.findAll({
-                where: {UsersModelId:userId,AnserquestionModelId:commentId}
-            })
+            // 设置答疑条件
+            conditions = {UsersModelId:userId,AnserquestionModelId:commentId};
+            row = await find(conditions);
         }else if(commentLabel === 'commentId'){
-            row = await PraiseModel.findAll({
-                where: {UsersModelId:userId,CommentsModelId:commentId}
-            })
+            // 设置评论条件
+            conditions = {UsersModelId:userId,CommentsModelId:commentId};
+            row = await find(conditions);
         }else if(commentLabel === 'replayId'){
-            row = await PraiseModel.findAll({
-                where: {UsersModelId:userId,RepalyModelId:commentId}
+            // 设置回复条件
+            conditions = {UsersModelId:userId,RepalyModelId:commentId};
+            row = await find(conditions);
+        }
+        // 查询函数
+        async function find(conditions){
+           return await PraiseModel.findAll({
+                where: conditions
             })
         }
         

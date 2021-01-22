@@ -40,15 +40,6 @@ module.exports = app => {
       comment: "发表日期",
       field: "date"
     },
-    praise: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "点赞数量",
-      field: "praise"
-    },
     source: {
       type: DataTypes.STRING(255),
       allowNull: true,
@@ -75,6 +66,24 @@ module.exports = app => {
       autoIncrement: false,
       comment: "单科课程id 外键",
       field: "ClassSingleModelId"
+    },
+    praise: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "答疑总点赞数",
+      field: "praise"
+    },
+    comment: {
+      type: DataTypes.INTEGER(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "评论总数",
+      field: "comment"
     }
   };
   const options = {

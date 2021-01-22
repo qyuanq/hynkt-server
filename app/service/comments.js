@@ -30,22 +30,38 @@ class commentsService extends Service{
     }
 
     /**
-     * 添加根评论
+     * 添加评论或回复
      * @params (*) commentsContent
      */
-    async addComments(comment){
+    async addComments(comment,userId){
+        console.log('userId',userId);
         const {ctx} = this;
+        let AnserquestionModel = ctx.model.AnserquestionModel;
         let CommentsModel = ctx.model.CommentsModel;
-        let ReplayModel = ctx.model.ReplayModel;
-        if(comment.AnserquestionModelId){
-            comment.data.AnserquestionModelId = comment.AnserquestionModelId;
-            return await CommentsModel.create(comment.data);
-        }else if(comment.CommentsModelId){
+        let ReplayModel = ctx.model.ReplayModel; 
+        let res = null;
+        comment.data.UsersModelId = userId;
+        if(comment.CommentsModelId){
+            // 添加回复
             comment.data.CommentsModelId = comment.CommentsModelId;
             comment.data.to_user_id = comment.to_user_id;
             comment.data.level = comment.level;
-            return await ReplayModel.create(comment.data);
+            res =  await ReplayModel.create(comment.data);
+        }else{
+            // 添加根评论
+            comment.data.AnserquestionModelId = comment.AnserquestionModelId;
+            res = await CommentsModel.create(comment.data);
         }
+        if(res){
+            // 获取答疑评论总数
+            let result = await AnserquestionModel.findOne({
+                attributes:['comment'],
+                where: {id:comment.AnserquestionModelId}
+            });
+            // 答疑评论+ 1
+            await AnserquestionModel.update({comment:result.comment + 1},{where: {id:comment.AnserquestionModelId}})
+        }
+        return res;
     }
     /**
      * 获取回复
@@ -69,6 +85,11 @@ class commentsService extends Service{
             ]
         })
     }
+
+    /**
+     * 删除评论或回复
+     * @params (*) id
+     */
 }
 
 module.exports = commentsService

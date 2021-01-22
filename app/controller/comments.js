@@ -24,8 +24,9 @@ class commentsController extends Controller{
      */
     async addComments(){
         const {ctx,service} = this;
+        const userId = ctx.state.user.data.id
         const comments = ctx.request.body || {};
-        const res = await service.comments.addComments(comments);
+        const res = await service.comments.addComments(comments,userId);
         ctx.helper.success({ctx,res});
     }
 
