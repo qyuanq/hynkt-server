@@ -27,16 +27,21 @@ class UserAccessService extends Service{
 
     /**
      * 获取用户信息
+     * @param (*) id
      */
-    async current(){
+    async current(id){
         const {ctx,service} = this
         //ctx.state.user  可以提取到jwt编码的data
-        const _id = ctx.state.user.data._id
-        const user = await service.user.find(_id)
+        // const _id = ctx.state.user.data._id
+        // const user = await service.user.find(id);
+        const user = await ctx.model.UsersModel.findOne({
+            where:{id: id},
+            attributes:['id','icon','username']
+        })
         if(!user){
             ctx.throw(404,'user is not found')
         }
-        user.password = 'How olad are you?'
+        // user.password = 'How olad are you?'
         return user
     }
 }

@@ -5,10 +5,11 @@ class answerQuestionService extends Service{
      * 获取课程答疑
      * @param {'*'} courceId 
      */
-    async getQuestion(courceId){
+    async getQuestion(courceId,currentPage){
         let AnserquestionModel = this.ctx.model.AnserquestionModel;
         let UsersModel = this.ctx.model.UsersModel;
         let ClassSingleModel = this.ctx.model.ClassSingleModel;
+        let pageSize = 10;
         UsersModel.hasMany(AnserquestionModel);
         AnserquestionModel.belongsTo(UsersModel);
         ClassSingleModel.hasMany(AnserquestionModel);
@@ -17,7 +18,9 @@ class answerQuestionService extends Service{
             include:[
                 {model:UsersModel}
             ],
-            where: {ClassSingleModelId : courceId}
+            where: {ClassSingleModelId : courceId},
+            offset:(currentPage - 1) * pageSize,
+            limit:pageSize
         })
     }
 
@@ -26,6 +29,7 @@ class answerQuestionService extends Service{
      * @param {'*'} question
      */
     async setQuestion(question){
+        console.log('上传答疑',question)
         let AnserquestionModel = this.ctx.model.AnserquestionModel;
         return await AnserquestionModel.create(question);
     }

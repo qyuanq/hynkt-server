@@ -10,8 +10,12 @@ class answerQuestionController extends Controller{
      */
     async getQuestion(){
         const {ctx,service} = this;
-        const courceId = ctx.params.id || {};
-        const res = await service.answerQuestion.getQuestion(courceId);
+        // 课程id
+        const courceId = parseInt(ctx.params.id) || {};
+        // 分页页码
+        const currentPage = parseInt(ctx.params.currentPage) || 1;
+        console.log('courceId查看',ctx.params);
+        const res = await service.answerQuestion.getQuestion(courceId,currentPage);
         ctx.helper.success({ctx, res})
     }
 
