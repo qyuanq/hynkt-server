@@ -14,14 +14,21 @@ class answerQuestionService extends Service{
         AnserquestionModel.belongsTo(UsersModel);
         ClassSingleModel.hasMany(AnserquestionModel);
         AnserquestionModel.belongsTo(ClassSingleModel);
-        return await AnserquestionModel.findAll({
+        const res =  await AnserquestionModel.findAndCountAll({
             include:[
                 {model:UsersModel}
             ],
             where: {ClassSingleModelId : courceId},
             offset:(currentPage - 1) * pageSize,
-            limit:pageSize
+            limit:pageSize,
+            order:[["praise","desc"],["date","desc"]],
+            distinct: true  //count的数量  include不算进去
         })
+        console.log('res',res)
+        return {
+            result:res.rows,
+            countPage:Math.ceil(res.count / pageSize)
+        }
     }
 
     /**

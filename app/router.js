@@ -26,7 +26,9 @@ module.exports = app => {
   router.get('/goodVideos/:id',controller.course.getGoodVideo);
   router.get('/cource/:id',controller.course.getCource)
   router.get('/mealClass/:id',controller.course.getMealClass);
-  // 课程答疑
+  // 课程答疑第一页
+  router.get('/api/answerQuestions/:id/',jwt,controller.answerQuestion.getQuestion);
+  // 课程答疑分页
   router.get('/api/answerQuestions/:id/:currentPage',jwt,controller.answerQuestion.getQuestion);
   // 创建课程答疑
   router.post('/api/answerQuestion',jwt,controller.upload.uploadQuestion);

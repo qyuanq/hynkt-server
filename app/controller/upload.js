@@ -55,6 +55,7 @@ class UploadController extends Controller{
      */
     async updateIcon(){
         const{ctx} = this;
+        // token内的用户id
         const id = ctx.state.user.data.id;
         // 获取上传后的图片地址
         let iconurl = await this.create().iconurl;
@@ -69,16 +70,28 @@ class UploadController extends Controller{
      */
     async uploadQuestion(){
         const{ctx} = this;
-        // 获取上传后的图片地址，formDate数据
-        const{iconurl,question} = await this.create();
         const id = ctx.state.user.data.id
-        question.UsersModelId = id;
-        question.picture = iconurl;
-        question.praise = 0;
+        // 如果请求时只有文本没有图片，则text不为空，如果上传图片则text为空对象
+        let text = ctx.request.body;
+        console.log('data数据',text);
+        let content;
+        const arr = Object.keys(text);
+        if(arr.length === 0){
+             // 获取上传后的图片地址，formDate数据
+            const{iconurl,question} = await this.create();
+            question.UsersModelId = id;
+            question.praise = 0;
+            question.picture = iconurl;
+            content = question;
+        }else{
+            text.UsersModelId = id;
+            text.praise = 0;
+            content = text;
+        }
         
-        console.log('question值：',question);
+        console.log('question值：',content);
         // 上传数据库操作
-        const res = ctx.service.answerQuestion.setQuestion(question);
+        const res = ctx.service.answerQuestion.setQuestion(content);
         ctx.helper.success({ctx,res});
         // ctx.helper.success({ctx,res:picture})
     }
