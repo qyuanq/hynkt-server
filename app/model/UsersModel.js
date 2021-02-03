@@ -77,6 +77,7 @@ module.exports = app => {
   UsersModel.associate = function(){
     app.model.UsersModel.hasMany(app.model.ReplayModel);
     app.model.UsersModel.hasMany(app.model.CommentsModel);
+    app.model.UsersModel.hasMany(app.model.AnserquestionModel);
   }
   return UsersModel;
 };

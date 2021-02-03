@@ -30,8 +30,12 @@ module.exports = app => {
   router.get('/api/answerQuestions/:id/',jwt,controller.answerQuestion.getQuestion);
   // 课程答疑分页
   router.get('/api/answerQuestions/:id/:currentPage',jwt,controller.answerQuestion.getQuestion);
+  // 课程答疑详情
+  router.get('/api/questionsDetail/:id',jwt,controller.answerQuestion.getQuestionDetail);
   // 创建课程答疑
   router.post('/api/answerQuestion',jwt,controller.upload.uploadQuestion);
+  // 删除答疑
+  router.delete('/api/answerQuestions/:id',jwt,controller.answerQuestion.deleteQuestion);
   // 点赞
   router.get('/api/like',jwt,controller.praise.onLike);
   // 是否点赞状态

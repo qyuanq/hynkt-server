@@ -92,5 +92,9 @@ module.exports = app => {
     indexes: []
   };
   const AnserquestionModel = sequelize.define("anserquestion_model", attributes, options);
+  AnserquestionModel.associate = function(){
+    app.model.AnserquestionModel.belongsTo(app.model.UsersModel);
+    app.model.AnserquestionModel.belongsTo(app.model.ClassSingleModel);
+  }
   return AnserquestionModel;
 };

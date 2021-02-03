@@ -8,12 +8,12 @@ class answerQuestionService extends Service{
     async getQuestion(courceId,currentPage){
         let AnserquestionModel = this.ctx.model.AnserquestionModel;
         let UsersModel = this.ctx.model.UsersModel;
-        let ClassSingleModel = this.ctx.model.ClassSingleModel;
+        // let ClassSingleModel = this.ctx.model.ClassSingleModel;
         let pageSize = 10;
-        UsersModel.hasMany(AnserquestionModel);
-        AnserquestionModel.belongsTo(UsersModel);
-        ClassSingleModel.hasMany(AnserquestionModel);
-        AnserquestionModel.belongsTo(ClassSingleModel);
+        // UsersModel.hasMany(AnserquestionModel);
+        // AnserquestionModel.belongsTo(UsersModel);
+        // ClassSingleModel.hasMany(AnserquestionModel);
+        // AnserquestionModel.belongsTo(ClassSingleModel);
         const res =  await AnserquestionModel.findAndCountAll({
             include:[
                 {model:UsersModel}
@@ -32,6 +32,24 @@ class answerQuestionService extends Service{
     }
 
     /**
+     * 获取答疑详情
+     * @param {*} questionId 
+     */
+    async getQuestionDetail(questionId){
+        let AnserquestionModel = this.ctx.model.AnserquestionModel;
+        let UsersModel = this.ctx.model.UsersModel;
+        return await AnserquestionModel.findOne({
+            where: {id:questionId},
+            include:[
+                {
+                    model:UsersModel,
+                    attributes:['id','username','icon']
+                }
+            ]
+        })
+    }
+
+    /**
      * 上传课程问题
      * @param {'*'} question
      */
@@ -39,6 +57,17 @@ class answerQuestionService extends Service{
         console.log('上传答疑',question)
         let AnserquestionModel = this.ctx.model.AnserquestionModel;
         return await AnserquestionModel.create(question);
+    }
+
+    /**
+     * 删除答疑
+     * @param {'*'} questionId
+     */
+    async deleteQuestion(questionId){
+        let AnserquestionModel = this.ctx.model.AnserquestionModel;
+        return await AnserquestionModel.destroy({
+            where: {id:questionId}
+        });
     }
 }
 
