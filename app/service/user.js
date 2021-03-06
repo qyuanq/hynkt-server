@@ -66,6 +66,7 @@ class UserService extends Service {
     let CourceitemsModel = this.ctx.model.CourceitemsModel;
     let MycourceModel = this.ctx.model.MycourceModel;
     let UsersModel = this.ctx.model.UsersModel;
+    let CourceSectionModel = this.ctx.model.CourceSectionModel;
   
     ClassSingleModel.belongsToMany(MycourceModel,{through:CourceitemsModel})
     MycourceModel.belongsToMany(ClassSingleModel,{through:CourceitemsModel})

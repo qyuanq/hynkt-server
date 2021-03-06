@@ -58,6 +58,9 @@ module.exports = app => {
   router.get('/teacher/:id',controller.teacher.getTeacher)
   router.get('/spe',controller.course.getCategory);
 
+  // 题库
+  router.get('/api/chapterTests/:id',controller.chapterTest.getChapterTest);
+  router.get('/api/topics/:id',controller.chapterTest.getTopic);
   // 支付
   router.get('/pay/wx',controller.pay.wxpay)
 };

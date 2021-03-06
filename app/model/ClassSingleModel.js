@@ -131,6 +131,7 @@ module.exports = app => {
   const ClassSingleModel = sequelize.define("class_single_model", attributes, options);
   ClassSingleModel.associate = function(){
     app.model.ClassSingleModel.hasMany(app.model.AnserquestionModel);
+    app.model.ClassSingleModel.hasMany(app.model.CourceSectionModel);
   }
   return ClassSingleModel;
 };
