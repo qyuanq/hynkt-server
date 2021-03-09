@@ -61,6 +61,10 @@ module.exports = app => {
   // 题库
   router.get('/api/chapterTests/:id',controller.chapterTest.getChapterTest);
   router.get('/api/topics/:id',controller.chapterTest.getTopic);
+  // 收藏
+  router.get('/api/collection',controller.favorites.collection);
+  router.get('/api/isCollection',controller.favorites.isCollection);
+  router.get('/api/collectionall',controller.favorites.getCollectionAll);
   // 支付
   router.get('/pay/wx',controller.pay.wxpay)
 };

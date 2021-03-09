@@ -101,7 +101,7 @@ class courseController extends Controller {
      */
     async getHotCource(){
         const {ctx,service} = this;
-        const res =  await service.course.getHotCource();
+        const res = await service.course.getHotCource();
         ctx.helper.success({ctx,res});
     }
 }

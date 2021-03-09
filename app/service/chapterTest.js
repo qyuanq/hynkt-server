@@ -1,4 +1,5 @@
 const Service = require('egg').Service
+const sequelize = require('sequelize')
 
 class chapterTestService extends Service {
     /**
@@ -10,13 +11,13 @@ class chapterTestService extends Service {
         let CourceSectionModel = ctx.model.CourceSectionModel;
         let ChapterTestModel = ctx.model.ChapterTestModel;
         return await CourceSectionModel.findAll({
-            where: {classSingleModelId:id}
-            // include:[
-            //     {
-            //         model:ChapterTestModel,
-            //         attributes:["id","title","optionA","optionB","optionC","optionD","parse"]
-            //     }
-            // ]
+            where: {classSingleModelId:id},
+            include:[
+                {
+                    model:ChapterTestModel,
+                    attributes:[[sequelize.literal(`(SELECT COUNT(*) FROM  chapter_test as chapter_test_model)`),'count']]
+                }
+            ]
         })
     }
 

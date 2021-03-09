@@ -14,7 +14,7 @@ module.exports = app => {
       field: "id"
     },
     title: {
-      type: DataTypes.STRING(32),
+      type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: null,
       primaryKey: false,
