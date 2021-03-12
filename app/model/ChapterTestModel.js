@@ -94,7 +94,7 @@ module.exports = app => {
   const ChapterTestModel = sequelize.define("chapter_test_model", attributes, options);
   ChapterTestModel.associate = function(){
     app.model.ChapterTestModel.belongsTo(app.model.CourceSectionModel);
-    app.model.ChapterTestModel.belongsTo(app.model.FavoritesModel);
+    app.model.ChapterTestModel.belongsToMany(app.model.FavoritesModel,{through:app.model.CollectionitemModel});
   }
   return ChapterTestModel;
 };

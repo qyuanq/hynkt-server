@@ -61,6 +61,9 @@ module.exports = app => {
   // 题库
   router.get('/api/chapterTests/:id',controller.chapterTest.getChapterTest);
   router.get('/api/topics/:id',controller.chapterTest.getTopic);
+  // 章节练习进度
+  router.get('/api/myTest',controller.user.getMyTest);
+  router.post('/api/myTest',controller.user.updateMyTest);
   // 收藏
   router.get('/api/collection',controller.favorites.collection);
   router.get('/api/isCollection',controller.favorites.isCollection);

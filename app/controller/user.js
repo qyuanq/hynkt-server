@@ -124,6 +124,35 @@ class UserController extends Controller{
     }
 
     /**
+     * @summary 查看用户章节练习进度
+     * @description 查看用户章节练习进度
+     * @router get /api/myTest
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+     async getMyTest(){
+        const {ctx,service} = this;
+        const data = ctx.request.query || {};
+        // console.log('查看参数',...data);
+        const res = await service.user.getMyTest(data.userId,data.classId,data.sectionId); 
+        ctx.helper.success({ctx,res});
+    }
+
+    /**
+     * @summary 更新用户章节练习进度
+     * @description 更新用户章节练习进度
+     * @router get /api/myTest
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+     async updateMyTest(){
+        const {ctx,service} = this;
+        const data = ctx.request.body || {};
+        const res = await service.user.updateMyTest(data.userId,data.classId,data.sectionId,data.testId,data.date); 
+        ctx.helper.success({ctx,res});
+    }
+
+    /**
      * @summary 获取用户所属专业
      * @description 获取用户所属专业
      * @router get /api/myClassgory

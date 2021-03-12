@@ -160,6 +160,47 @@ class UserService extends Service {
   }
 
   /**
+   * 查看我的章节练习进度
+   * @param {*} userId
+   * @param {*} classId
+   * @param {*} sectionId
+   * @returns 
+   */
+  async getMyTest(userId,classId,sectionId){
+    let MytestModel = this.ctx.model.MytestModel;
+    return await MytestModel.findOne({
+      where: {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId}
+    })
+  }
+
+  /**
+   * 更新我的章节练习进度
+   * @param {*} userId
+   * @param {*} classId
+   * @param {*} sectionId
+   * @param {*} testId
+   * @returns 
+   */
+  async updateMyTest(userId,classId,sectionId,testId,date){
+      let MytestModel = this.ctx.model.MytestModel;
+      const conditions = {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId};
+      // 该用户下是否存在该课程该章节下的练习进度
+      const res =  await MytestModel.findAll({
+        where: conditions
+      })
+      if(res.length > 0){
+        // 存在更新
+        return await MytestModel.update(
+          {chapterTestModelId:testId,date:date},
+          {where: conditions}
+        )
+      }else{
+        // 不存在添加
+        return await MytestModel.create({usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId,chapterTestModelId:testId,date:date});
+      }
+  }
+
+  /**
    * 查看单个用户
    */
   async show(_id) {

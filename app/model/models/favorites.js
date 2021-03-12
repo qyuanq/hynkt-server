@@ -29,8 +29,5 @@ module.exports = app => {
     indexes: []
   };
   const FavoritesModel = sequelize.define("favorites_model", attributes, options);
-  FavoritesModel.associate = function(){
-    app.model.FavoritesModel.belongsToMany(app.model.ChapterTestModel,{through:app.model.CollectionitemModel});
-  }
   return FavoritesModel;
 };

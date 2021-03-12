@@ -13,24 +13,30 @@ module.exports = app => {
       comment: null,
       field: "id"
     },
-    UsersModelId: {
+    ChapterTestModelId: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户id",
-      field: "UsersModelId"
+      comment: "习题id 外键",
+      field: "ChapterTestModelId"
+    },
+    FavoritesModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "收藏id 外键",
+      field: "FavoritesModelId"
     }
   };
   const options = {
-    tableName: "favorites",
+    tableName: "collectionitem",
     comment: "",
     indexes: []
   };
-  const FavoritesModel = sequelize.define("favorites_model", attributes, options);
-  FavoritesModel.associate = function(){
-    app.model.FavoritesModel.belongsToMany(app.model.ChapterTestModel,{through:app.model.CollectionitemModel});
-  }
-  return FavoritesModel;
+  const CollectionitemModel = sequelize.define("collectionitem_model", attributes, options);
+  return CollectionitemModel;
 };
