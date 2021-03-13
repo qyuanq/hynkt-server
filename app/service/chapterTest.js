@@ -6,12 +6,13 @@ class chapterTestService extends Service {
      * @param (*) id 课程id
      * 获取章节练习
      */
-    async getChapterTest(id){
+    async getChapterTest(courceId,userId){
         const {ctx} = this;
         let CourceSectionModel = ctx.model.CourceSectionModel;
         let ChapterTestModel = ctx.model.ChapterTestModel;
-        return await CourceSectionModel.findAll({
-            where: {classSingleModelId:id},
+        let MytestModel = ctx.model.MytestModel;
+        let res =  await CourceSectionModel.findAll({
+            where: {classSingleModelId:courceId},
             include:[
                 {
                     model:ChapterTestModel,
@@ -19,6 +20,16 @@ class chapterTestService extends Service {
                 }
             ]
         })
+        
+        const count = await MytestModel.findAll({
+            where: {classSingleModelId: courceId,usersModelId: userId},
+            attributes:["haveCount","rightCount"]
+        })
+        count.forEach((item,index) => {
+            res[index].dataValues.haveCount = item.haveCount;
+            res[index].dataValues.rightCount = item.rightCount;
+        })
+        return res;
     }
 
      /**

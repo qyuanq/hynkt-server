@@ -10,8 +10,10 @@ class chapterTestController extends Controller{
      */
     async getChapterTest(){
         const {ctx,service} = this;
-        const id = ctx.params.id;
-        const res = await service.chapterTest.getChapterTest(id);
+        const courceId = ctx.params.id;
+        // 从token中获取
+        const userId = ctx.state.user.data.id;
+        const res = await service.chapterTest.getChapterTest(courceId,userId);
         ctx.helper.success({ctx,res});
     }
 

@@ -168,8 +168,16 @@ class UserService extends Service {
    */
   async getMyTest(userId,classId,sectionId){
     let MytestModel = this.ctx.model.MytestModel;
+    let TestRecordModel = this.ctx.model.TestRecordModel;
     return await MytestModel.findOne({
-      where: {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId}
+      where: {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId},
+      include:[
+        {
+          model:TestRecordModel,
+          attributes:["record"]      
+        }
+      ],
+      raw:true  
     })
   }
 
@@ -181,23 +189,26 @@ class UserService extends Service {
    * @param {*} testId
    * @returns 
    */
-  async updateMyTest(userId,classId,sectionId,testId,date){
+  async updateMyTest(userId,classId,sectionId,testId,date,haveCount,rightCount,record){
       let MytestModel = this.ctx.model.MytestModel;
+      let TestRecordModel = this.ctx.model.TestRecordModel;
       const conditions = {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId};
       // 该用户下是否存在该课程该章节下的练习进度
       const res =  await MytestModel.findAll({
         where: conditions
       })
+      let resultData;
       if(res.length > 0){
         // 存在更新
-        return await MytestModel.update(
-          {chapterTestModelId:testId,date:date},
+        resultData = await MytestModel.update(
+          {chapterTestModelId:testId,date:date,haveCount:haveCount,rightCount:rightCount},
           {where: conditions}
         )
       }else{
         // 不存在添加
-        return await MytestModel.create({usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId,chapterTestModelId:testId,date:date});
+        resultData = await MytestModel.create({usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId,chapterTestModelId:testId,date:date});
       }
+      return  await TestRecordModel.create({mytestModelId:resultData[0],record:record},{updateOnDuplicate:["record"]});
   }
 
   /**

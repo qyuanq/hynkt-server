@@ -83,8 +83,5 @@ module.exports = app => {
     indexes: []
   };
   const MytestModel = sequelize.define("mytest_model", attributes, options);
-  MytestModel.associate = function(){
-    app.model.MytestModel.hasMany(app.model.TestRecordModel);
-  }
   return MytestModel;
 };

@@ -148,7 +148,7 @@ class UserController extends Controller{
      async updateMyTest(){
         const {ctx,service} = this;
         const data = ctx.request.body || {};
-        const res = await service.user.updateMyTest(data.userId,data.classId,data.sectionId,data.testId,data.date); 
+        const res = await service.user.updateMyTest(data.userId,data.classId,data.sectionId,data.testId,data.date,data.haveCount,data.rightCount,data.record); 
         ctx.helper.success({ctx,res});
     }
 
