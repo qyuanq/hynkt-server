@@ -75,5 +75,8 @@ module.exports = app => {
     indexes: []
   };
   const MysimulationModel = sequelize.define("mysimulation_model", attributes, options);
+  MysimulationModel.associate = function(){
+    app.model.MysimulationModel.belongsTo(app.model.SimulationTestModel);
+  }
   return MysimulationModel;
 };

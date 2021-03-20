@@ -9,7 +9,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
       field: "id"
     },
@@ -59,7 +59,7 @@ module.exports = app => {
       field: "optionD"
     },
     answer: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(512),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -67,23 +67,23 @@ module.exports = app => {
       comment: "答案",
       field: "answer"
     },
-    parse: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "答案解析",
-      field: "parse"
-    },
-    courceSectionModelId: {
+    score: {
       type: DataTypes.INTEGER(16),
-      allowNull: true,
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "章节id 外键",
-      field: "courceSectionModelId"
+      comment: "分值",
+      field: "score"
+    },
+    simulationTestModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "章节id",
+      field: "simulationTestModelId"
     },
     type: {
       type: DataTypes.INTEGER(16),
@@ -96,14 +96,13 @@ module.exports = app => {
     }
   };
   const options = {
-    tableName: "chapter_test",
+    tableName: "test_question",
     comment: "",
     indexes: []
   };
-  const ChapterTestModel = sequelize.define("chapter_test_model", attributes, options);
-  ChapterTestModel.associate = function(){
-    app.model.ChapterTestModel.belongsTo(app.model.CourceSectionModel);
-    app.model.ChapterTestModel.belongsToMany(app.model.FavoritesModel,{through:app.model.CollectionitemModel});
+  const TestQuestionModel = sequelize.define("test_question_model", attributes, options);
+  TestQuestionModel.associate = function(){
+    app.model.TestQuestionModel.belongsTo(app.model.SimulationTestModel);
   }
-  return ChapterTestModel;
+  return TestQuestionModel;
 };

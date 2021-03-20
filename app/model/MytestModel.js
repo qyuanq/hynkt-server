@@ -11,11 +11,12 @@ module.exports = app => {
       primaryKey: true,
       autoIncrement: true,
       comment: null,
-      field: "id"
+      field: "id",
+      unique: "id"
     },
     usersModelId: {
       type: DataTypes.INTEGER(16),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -24,7 +25,7 @@ module.exports = app => {
     },
     date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -33,7 +34,7 @@ module.exports = app => {
     },
     classSingleModelId: {
       type: DataTypes.INTEGER(16),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -42,7 +43,7 @@ module.exports = app => {
     },
     courceSectionModelId: {
       type: DataTypes.INTEGER(16),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -51,7 +52,7 @@ module.exports = app => {
     },
     chapterTestModelId: {
       type: DataTypes.INTEGER(16),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -60,7 +61,7 @@ module.exports = app => {
     },
     haveCount: {
       type: DataTypes.INTEGER(4),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
@@ -69,7 +70,7 @@ module.exports = app => {
     },
     rightCount: {
       type: DataTypes.INTEGER(4),
-      allowNull: false,
+      allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,

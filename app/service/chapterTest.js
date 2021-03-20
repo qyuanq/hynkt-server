@@ -16,7 +16,7 @@ class chapterTestService extends Service {
             include:[
                 {
                     model:ChapterTestModel,
-                    attributes:[[sequelize.literal(`(SELECT COUNT(*) FROM  chapter_test as chapter_test_model)`),'count']]
+                    attributes:[[sequelize.literal(`(SELECT COUNT(*) FROM  chapter_test as chapter_test_model)`),'count']] 
                 }
             ]
         })
@@ -41,7 +41,7 @@ class chapterTestService extends Service {
         let ChapterTestModel = ctx.model.ChapterTestModel;
         return await ChapterTestModel.findAll({
             where:{courceSectionModelId:id},
-            attributes:["id","title","optionA","optionB","optionC","optionD","answer","parse"]
+            attributes:["id","title","optionA","optionB","optionC","optionD","answer","parse","type"]
         });
     }
 }

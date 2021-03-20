@@ -47,7 +47,8 @@ module.exports = app => {
       primaryKey: false,
       autoIncrement: false,
       comment: "章节Id",
-      field: "courceSectionModelId"
+      field: "courceSectionModelId",
+      unique: "courceSectionModelId"
     },
     chapterTestModelId: {
       type: DataTypes.INTEGER(16),

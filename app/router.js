@@ -68,6 +68,10 @@ module.exports = app => {
   router.get('/api/collection',controller.favorites.collection);
   router.get('/api/isCollection',controller.favorites.isCollection);
   router.get('/api/collectionall',controller.favorites.getCollectionAll);
+  // 模拟考试
+  router.get('/api/alltests/:courceId',controller.simulationTest.getAllTest);
+  router.get('/api/testQuestions/:testId',controller.simulationTest.getTestQuestion);
+  router.post('/api/testRecord',controller.simulationTest.updateTestRecord);
   // 支付
   router.get('/pay/wx',controller.pay.wxpay)
 };

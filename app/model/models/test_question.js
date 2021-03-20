@@ -9,7 +9,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: null,
       primaryKey: true,
-      autoIncrement: false,
+      autoIncrement: true,
       comment: null,
       field: "id"
     },
@@ -59,7 +59,7 @@ module.exports = app => {
       field: "optionD"
     },
     answer: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(512),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -67,30 +67,39 @@ module.exports = app => {
       comment: "答案",
       field: "answer"
     },
-    parse: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
+    score: {
+      type: DataTypes.INTEGER(16),
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "答案解析",
-      field: "parse"
+      comment: "分值",
+      field: "score"
     },
-    courceSectionModelId: {
+    simulationTestModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "章节id",
+      field: "simulationTestModelId"
+    },
+    type: {
       type: DataTypes.INTEGER(16),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "章节id 外键",
-      field: "courceSectionModelId"
+      comment: "题型 1单选 2多选 3判断 4填空 5问答",
+      field: "type"
     }
   };
   const options = {
-    tableName: "chapter_test",
+    tableName: "test_question",
     comment: "",
     indexes: []
   };
-  const ChapterTestModel = sequelize.define("chapter_test_model", attributes, options);
-  return ChapterTestModel;
+  const TestQuestionModel = sequelize.define("test_question_model", attributes, options);
+  return TestQuestionModel;
 };

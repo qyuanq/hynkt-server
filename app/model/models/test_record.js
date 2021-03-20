@@ -39,8 +39,5 @@ module.exports = app => {
     indexes: []
   };
   const TestRecordModel = sequelize.define("test_record_model", attributes, options);
-  TestRecordModel.associate = function(){
-    app.model.TestRecordModel.belongsTo(app.model.MytestModel);
-  }
   return TestRecordModel;
 };

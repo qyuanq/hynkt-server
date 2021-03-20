@@ -189,27 +189,16 @@ class UserService extends Service {
    * @param {*} testId
    * @returns 
    */
-  async updateMyTest(userId,classId,sectionId,testId,date,haveCount,rightCount,record){
+  async updateMyTest(data,userId){
       let MytestModel = this.ctx.model.MytestModel;
       let TestRecordModel = this.ctx.model.TestRecordModel;
-      const conditions = {usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId};
-      // 该用户下是否存在该课程该章节下的练习进度
-      const res =  await MytestModel.findAll({
-        where: conditions
-      })
-      let resultData;
-      if(res.length > 0){
-        // 存在更新
-        resultData = await MytestModel.update(
-          {chapterTestModelId:testId,date:date,haveCount:haveCount,rightCount:rightCount},
-          {where: conditions}
-        )
-      }else{
-        // 不存在添加
-        resultData = await MytestModel.create({usersModelId:userId,classSingleModelId:classId,courceSectionModelId:sectionId,chapterTestModelId:testId,date:date});
-      }
-      return  await TestRecordModel.create({mytestModelId:resultData[0],record:record},{updateOnDuplicate:["record"]});
-  }
+      data.myProgress.usersModelId = userId;
+      // 该用户下是否存在该课程该章节下的练习进度,存在即更新不存在即创建
+      //upsert： 由于id设置了自增，model需要设置唯一约束，才能正常使用
+      const resultData = await MytestModel.upsert(data.myProgress)
+      const myTestId = resultData[0].dataValues.id;
+      return  await TestRecordModel.upsert({mytestModelId:myTestId,record:data.record});
+    }
 
   /**
    * 查看单个用户
