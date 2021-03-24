@@ -124,7 +124,8 @@ class favoritesService extends Service{
                     optionC: item['chapter_test_models.optionC'],
                     optionD: item['chapter_test_models.optionD'],
                     answer: item['chapter_test_models.answer'],
-                    parse: item['chapter_test_models.parse']
+                    parse: item['chapter_test_models.parse'],
+                    type: item['chapter_test_models.type']
                 }
             })
         }else if(isVideo){  //获取视频
