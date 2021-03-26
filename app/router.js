@@ -72,6 +72,9 @@ module.exports = app => {
   router.get('/api/alltests/:courceId',controller.simulationTest.getAllTest);
   router.get('/api/testQuestions/:testId',controller.simulationTest.getTestQuestion);
   router.post('/api/testRecord',controller.simulationTest.updateTestRecord);
+  //下载
+  router.get('/api/download/:id',jwt,controller.download.download);
+  
   // 支付
   router.get('/pay/wx',controller.pay.wxpay)
 };
