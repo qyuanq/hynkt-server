@@ -84,6 +84,15 @@ module.exports = app => {
       autoIncrement: false,
       comment: "当前课程位置",
       field: "currentCource"
+    },
+    classSingleModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "课程id",
+      field: "classSingleModelId"
     }
   };
   const options = {
@@ -92,5 +101,8 @@ module.exports = app => {
     indexes: []
   };
   const MycourceModel = sequelize.define("mycource_model", attributes, options);
+  MycourceModel.associate = function(){
+    app.model.MycourceModel.belongsToMany(app.model.ClassSingleModel,{through:app.model.CourceitemsModel})
+  }
   return MycourceModel;
 };

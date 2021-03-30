@@ -15,15 +15,15 @@ module.exports = app => {
   // 用户课程
   router.get('/api/myCources/:id',jwt,controller.user.userCource);
   // 用户学习进度
-  router.get('/myProgress/:id',controller.user.userProgress);
+  router.get('/api/myProgress/:id',jwt,controller.user.userProgress);
   // 更新用户学习进度
-  router.post('/updateProgress',controller.user.updateProgress);
+  router.post('/api/updateProgress',jwt,controller.user.updateProgress);
   // 用户专业
   router.get('/api/myClassgory/:id',jwt,controller.user.userClassgory);
   // 课程
   router.get('/api/categorys',jwt,controller.course.getCategory);
   router.get('/api/classes/:id',jwt,controller.course.getClasses);
-  router.get('/goodVideos/:id',controller.course.getGoodVideo);
+  router.get('/api/goodVideos/:id',jwt,controller.course.getGoodVideo);
   router.get('/cource/:id',controller.course.getCource)
   router.get('/mealClass/:id',controller.course.getMealClass);
   // 课程答疑第一页
@@ -72,6 +72,9 @@ module.exports = app => {
   router.get('/api/alltests/:courceId',controller.simulationTest.getAllTest);
   router.get('/api/testQuestions/:testId',controller.simulationTest.getTestQuestion);
   router.post('/api/testRecord',controller.simulationTest.updateTestRecord);
+  // 学习进度
+  router.get('/api/myAllTest',jwt,controller.user.getAllTest);
+  
   //下载
   router.get('/api/download/:id',jwt,controller.download.download);
   

@@ -57,6 +57,15 @@ module.exports = app => {
       autoIncrement: false,
       comment: "单科班外键",
       field: "single_id"
+    },
+    courceSectionModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "课程章节id",
+      field: "courceSectionModelId"
     }
   };
   const options = {

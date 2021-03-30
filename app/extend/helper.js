@@ -10,3 +10,13 @@ exports.success = ({ctx,res,msg = '请求成功'}) => {
     }
     ctx.status = 200
 }
+
+// 处理失败响应
+exports.fail = ({ctx,res,msg = '无数据'}) => {
+    ctx.body = {
+        code:-1,
+        data:res,
+        msg
+    }
+    ctx.status = 200
+}

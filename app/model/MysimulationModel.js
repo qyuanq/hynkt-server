@@ -67,6 +67,15 @@ module.exports = app => {
       autoIncrement: false,
       comment: "最后一次分数",
       field: "score"
+    },
+    classSingleModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "课程id  外键",
+      field: "classSingleModelId"
     }
   };
   const options = {

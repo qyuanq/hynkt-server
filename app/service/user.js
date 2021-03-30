@@ -1,5 +1,6 @@
 const Service = require('egg').Service
 const moment = require('moment')
+const sequelize = require('sequelize')
 
 class UserService extends Service {
   
@@ -124,12 +125,13 @@ class UserService extends Service {
 
   /**
    * 查看用户课程学习进度
-   * @param {*} id 
+   * @param {*} myCourceId 
+   * @param {*} userId 
    */
-  async userProgress(id){
+  async userProgress(courceId,userId){
     let MycourceModel = this.ctx.model.MycourceModel;
     return await MycourceModel.findOne({
-      where: {id:id},
+      where: {id:courceId,usersModelId:userId},
       attributes:['sec_selected','vid_selected','vid_title','currentTime','proarr']
     })
   } 
@@ -139,11 +141,11 @@ class UserService extends Service {
    * @param {*} arr
    * @param {*} id
    */
-  async updateProgress(data){
+  async updateProgress(data,userId){
     let MycourceModel = this.ctx.model.MycourceModel;
     return await MycourceModel.update(
       data,
-      {where: {id:data.id}}
+      {where: {id:data.id,usersModelId:userId}}
     )
   }
 
@@ -160,7 +162,7 @@ class UserService extends Service {
   }
 
   /**
-   * 查看我的章节练习进度
+   * 查看我的单章节练习进度
    * @param {*} userId
    * @param {*} classId
    * @param {*} sectionId
@@ -198,6 +200,65 @@ class UserService extends Service {
       const resultData = await MytestModel.upsert(data.myProgress)
       const myTestId = resultData[0].dataValues.id;
       return  await TestRecordModel.upsert({mytestModelId:myTestId,record:data.record});
+    }
+
+    /**
+     * 查看用户所有章节练习进度
+     * @param {*} userId
+     * @param {*} courceId
+     */
+    async getAllTest(userId,courceId){
+      let MysimulationModel = this.ctx.model.MysimulationModel;
+      let SimulationTestModel = this.ctx.model.SimulationTestModel;
+      let VideoGoodModel = this.ctx.model.VideoGoodModel;
+      let MycourceModel = this.ctx.model.MycourceModel;
+
+      // 模拟试卷总数
+      const resTest = await SimulationTestModel.findAndCountAll({
+        where: {classSingleModelId: courceId}
+      })
+      const simCount = resTest.count;
+      //我做过的试卷
+      const resMyTest =  await MysimulationModel.findAndCountAll({
+        where: {usersModelId:userId,classSingleModelId:courceId}
+      })
+      const mySimCount = resMyTest.count;
+      
+      const res = await this.ctx.service.chapterTest.getChapterTest(courceId,userId)
+      //做过的练习总数
+      let haveCount = 0;
+      res.forEach(item => {
+        haveCount += item.dataValues.haveCount;
+      })
+      //章节练习总数
+      console.log('习题',res);
+      const sectionTestCount = res[0].dataValues.chapter_test_models[0].dataValues.count;
+      // 视频总数
+      const videos = await VideoGoodModel.findAndCountAll({
+        where:{single_id:courceId}
+      })
+      const videoCount = videos.count;
+
+      // 视频总数
+      let havVideos = await MycourceModel.findOne({
+        where: {classSingleModelId:courceId,usersModelId:userId},
+        attributes:['proarr']
+      })
+      
+      let watchVideo = 0;
+      havVideos = JSON.parse(havVideos.dataValues.proarr)
+      havVideos.forEach(item => {
+        watchVideo += item.progress;
+      })
+      return {
+        simCount,
+        mySimCount,
+        haveCount,
+        sectionTestCount,
+        videoCount,
+        watchVideo
+      };
+      
     }
 
   /**

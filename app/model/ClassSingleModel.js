@@ -132,6 +132,7 @@ module.exports = app => {
   ClassSingleModel.associate = function(){
     app.model.ClassSingleModel.hasMany(app.model.AnserquestionModel);
     app.model.ClassSingleModel.hasMany(app.model.CourceSectionModel);
+    app.model.ClassSingleModel.belongsToMany(app.model.MycourceModel,{through:app.model.CourceitemsModel})
   }
   return ClassSingleModel;
 };

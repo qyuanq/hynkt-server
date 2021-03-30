@@ -99,10 +99,10 @@ class CourseService extends Service {
 
     /**
      * 获取课程视频
+     * @param (*) {courceId}
      */
-    async getGoodVideo(id){
-        console.log('课程id:',id);
-        let section = await this.ctx.model.VideoGoodModel.findAll({where: {single_id:id},attributes:['section'],group: ['section']})
+    async getGoodVideo(courceId){
+        let section = await this.ctx.model.VideoGoodModel.findAll({where: {single_id:courceId},attributes:['section'],group: ['section']})
         let cources;
         cources = Promise.all(section.map(async item => {
            let courceInfo = await this.ctx.model.VideoGoodModel.findAll({where: {section:item.section}})

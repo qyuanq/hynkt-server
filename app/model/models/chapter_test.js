@@ -13,84 +13,93 @@ module.exports = app => {
       comment: null,
       field: "id"
     },
-    usersModelId: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "用户主键 外键",
-      field: "usersModelId"
+      comment: "题目",
+      field: "title"
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "课程加入时间",
-      field: "date"
-    },
-    sec_selected: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "章节索引",
-      field: "sec_selected"
-    },
-    vid_selected: {
-      type: DataTypes.INTEGER(16),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: "视频索引",
-      field: "vid_selected"
-    },
-    vid_title: {
+    optionA: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "当前标题",
-      field: "vid_title"
+      comment: "选项A",
+      field: "optionA"
     },
-    currentTime: {
-      type: DataTypes.DOUBLE,
+    optionB: {
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "当前播放位置",
-      field: "currentTime"
+      comment: "选项B",
+      field: "optionB"
     },
-    proarr: {
-      type: DataTypes.STRING(1024),
+    optionC: {
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "已播放进度数组",
-      field: "proarr"
+      comment: "选项C",
+      field: "optionC"
     },
-    currentCource: {
-      type: DataTypes.INTEGER(4),
+    optionD: {
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
-      comment: "当前课程位置",
-      field: "currentCource"
+      comment: "选项D",
+      field: "optionD"
+    },
+    answer: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "答案",
+      field: "answer"
+    },
+    parse: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "答案解析",
+      field: "parse"
+    },
+    courceSectionModelId: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "章节id 外键",
+      field: "courceSectionModelId"
+    },
+    type: {
+      type: DataTypes.INTEGER(16),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: "题型 1单选 2多选 3判断 4填空 5问答",
+      field: "type"
     }
   };
   const options = {
-    tableName: "mycource",
+    tableName: "chapter_test",
     comment: "",
     indexes: []
   };
-  const MycourceModel = sequelize.define("mycource_model", attributes, options);
-  return MycourceModel;
+  const ChapterTestModel = sequelize.define("chapter_test_model", attributes, options);
+  return ChapterTestModel;
 };

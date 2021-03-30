@@ -103,8 +103,14 @@ class UserController extends Controller{
     async userProgress(){
         const {ctx,service} = this;
         const id = ctx.params.id || {};
-        const res = await service.user.userProgress(id);
-        ctx.helper.success({ctx,res});
+        const userId = ctx.state.user.data.id;
+        const res = await service.user.userProgress(id,userId);
+        console.log('查看用户进度',res);
+        if(res){
+            ctx.helper.success({ctx,res});
+        }else{
+            ctx.helper.fail({ctx,res});
+        }
     }
 
     /**
@@ -118,8 +124,8 @@ class UserController extends Controller{
         const {ctx,service} = this;
         const data = ctx.request.body || {};
         console.log('data',data);
-        const res= await service.user.updateProgress(data);
-        console.log(res);
+        const userId = ctx.state.user.data.id;
+        const res= await service.user.updateProgress(data,userId);
         ctx.helper.success({ctx,res});
     }
 
@@ -141,7 +147,7 @@ class UserController extends Controller{
     /**
      * @summary 更新用户章节练习进度
      * @description 更新用户章节练习进度
-     * @router get /api/myTest
+     * @router post /api/myTest
      * @request header string *header
      * @response 200 baseResponse 返回用户信息成功
      */
@@ -150,6 +156,22 @@ class UserController extends Controller{
         const data = ctx.request.body || {};
         const userId = ctx.state.user.data.id;
         const res = await service.user.updateMyTest(data,userId); 
+        ctx.helper.success({ctx,res});
+    }
+
+    /**
+     * @summary 查看用户所有学习进度
+     * @description 查看用户所有学习进度
+     * @router get /api/myAllTest
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async getAllTest(){
+        const {ctx,service} = this;
+        const query = ctx.request.query || {};
+        console.log(query);
+        const userId = ctx.state.user.data.id;
+        const res = await service.user.getAllTest(userId,query.courceId);
         ctx.helper.success({ctx,res});
     }
 

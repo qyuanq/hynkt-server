@@ -42,6 +42,7 @@ class simulationTestService extends Service {
     async updateTestRecord(userId,data){
         let MysimulationModel = this.ctx.model.MysimulationModel;
         data.usersModelId = userId
+        console.log('data值',data)
         const res = await MysimulationModel.upsert(data)
         if(data.score >= 0){
              //count默认为0，count自增 +1
