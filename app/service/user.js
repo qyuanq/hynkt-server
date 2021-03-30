@@ -248,7 +248,7 @@ class UserService extends Service {
       let watchVideo = 0;
       havVideos = JSON.parse(havVideos.dataValues.proarr)
       havVideos.forEach(item => {
-        watchVideo += item.progress;
+        watchVideo += parseInt(item.progress);
       })
       return {
         simCount,
