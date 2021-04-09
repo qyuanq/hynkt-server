@@ -6,8 +6,8 @@ class downloadController extends Controller{
      * @summary 下载文件
      * @description 下载文件
      * @router get /api/download
-     * @request
-     * @response
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
      */
     async download(){
         const {ctx} = this;

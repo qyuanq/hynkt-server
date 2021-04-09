@@ -129,5 +129,9 @@ module.exports = app => {
     indexes: []
   };
   const ClassMealModel = sequelize.define("class_meal_model", attributes, options);
+  ClassMealModel.associate = function(){
+    app.model.ClassMealModel.belongsToMany(app.model.GoodCartModel,{through:app.model.CartitemModel})
+    app.model.ClassMealModel.hasMany(app.model.CartitemModel);
+  }
   return ClassMealModel;
 };

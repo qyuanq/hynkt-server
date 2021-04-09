@@ -78,6 +78,11 @@ module.exports = app => {
   //下载
   router.get('/api/download/:id',jwt,controller.download.download);
   
+  // 购物车
+  router.get('/api/carts',jwt,controller.cart.addCart);
+  router.get('/api/myCart',jwt,controller.cart.getCart);
+  router.delete('/api/myCart/:cartId',jwt,controller.cart.deleteCart);
+  router.delete('/api/myCartAll',jwt,controller.cart.deleteCartAll);
   // 支付
   router.get('/pay/wx',controller.pay.wxpay)
 };

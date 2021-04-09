@@ -133,6 +133,8 @@ module.exports = app => {
     app.model.ClassSingleModel.hasMany(app.model.AnserquestionModel);
     app.model.ClassSingleModel.hasMany(app.model.CourceSectionModel);
     app.model.ClassSingleModel.belongsToMany(app.model.MycourceModel,{through:app.model.CourceitemsModel})
+    app.model.ClassSingleModel.belongsToMany(app.model.GoodCartModel,{through:app.model.CartitemModel})
+    app.model.ClassSingleModel.hasMany(app.model.CartitemModel);
   }
   return ClassSingleModel;
 };
