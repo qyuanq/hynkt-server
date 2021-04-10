@@ -55,21 +55,30 @@ class cartService extends Service{
     }
 
     /**
-     * 清空购物车
+     * 清空购物车 / 删除选中购物车商品
      * @param {*} userId 
+     * @param {*} cartIds 
+     * @param {*} isAll 
      */
-     async deleteCartAll(userId){
+     async deleteCartAll(userId,cartIds,isAll){
         let GoodCartModel = this.ctx.model.GoodCartModel;
         let CartitemModel = this.ctx.model.CartitemModel;
         const res = await GoodCartModel.findOne({
             where:{userModelId:userId},
             attributes:['id']
         })
-        const myCartId = res
-        console.log(res)
-        return await CartitemModel.destroy({
-            where: {goodCartModelId:myCartId}
-        })
+        const myCartId = res.dataValues.id;
+        console.log(cartIds,isAll)
+        //清空购物车
+        if(isAll){
+            return await CartitemModel.destroy({
+                where: {goodCartModelId:myCartId}
+            })
+        }else{  //删除选中购物车商品
+            return await CartitemModel.destroy({
+                where: {id: JSON.parse(cartIds)}
+            })
+        }
     }
 
     /**

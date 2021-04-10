@@ -49,8 +49,8 @@ class cartController extends Controller{
     }
 
     /**
-     * @summary  清空购物车
-     * @description 清空购物车
+     * @summary  清空购物车/选中购物车商品
+     * @description 清空购物车/选中购物车商品
      * @router delete /api/myCartAll
      * @request header string *header
      * @response 200 baseResponse 返回用户信息成功
@@ -58,7 +58,10 @@ class cartController extends Controller{
      async deleteCartAll(){
         const {ctx,service} = this;
         const userId = ctx.state.user.data.id || {};
-        const res = await service.cart.deleteCartAll(userId)
+        const query = ctx.request.query;
+        const cartIds = query.cartIds || [];
+        const isAll = query.isAll || null;
+        const res = await service.cart.deleteCartAll(userId,cartIds,isAll);
         ctx.helper.success({ctx,res});
     }
 }
