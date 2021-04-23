@@ -1,5 +1,6 @@
-const { sequelize } = require('../../config/plugin')
-const SpeclalltyModel = require('../model/SpeclalltyModel')
+// const { sequelize } = require('../../config/plugin')
+// const SpeclalltyModel = require('../model/SpeclalltyModel')
+const { Op } = require("sequelize");
 
 const Service = require('egg').Service
 
@@ -185,6 +186,54 @@ class CourseService extends Service {
         return [...hotSingle,...hotMeal].sort((a,b)=>{
             return a.hotSort - b.hotSort
         });
+        
+    }
+
+    /**
+     * 模糊查询课程
+     * @param {*} keyword
+     */
+    async searchCource(keyword,classGroup,classType){
+        console.log(keyword,classGroup,classType);
+        let ClassSingleModel = this.ctx.model.ClassSingleModel;
+        let ClassMealModel = this.ctx.model.ClassMealModel;
+        let conditions = {};
+        if(! keyword) return [];
+        // 专业类别是否存在
+        if(classGroup && classGroup !== '-1'){
+            conditions = {
+                name:{
+                    [Op.like]:'%' + keyword + '%'
+                },
+                classgroup_id:classGroup
+            }
+        }else{
+            conditions = {
+                name:{
+                    [Op.like]:'%' + keyword + '%'
+                }
+            }
+        }
+        if(classType === '全部班型' || !classType){
+            const resSingle = await single(conditions);
+            const resMeal = await meal(conditions);
+            return resSingle.concat(resMeal)
+        }else if(classType === '单科班'){
+            return await single(conditions)
+        }else if(classType === '套餐班'){
+            return await meal(conditions)
+        }
+
+        async function single(conditions){
+            return await ClassSingleModel.findAll({
+                where: conditions
+            })
+        }
+        async function meal(conditions){
+            return await ClassMealModel.findAll({
+                where: conditions
+            })
+        }
         
     }
 }

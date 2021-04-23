@@ -104,5 +104,22 @@ class courseController extends Controller {
         const res = await service.course.getHotCource();
         ctx.helper.success({ctx,res});
     }
+
+    /**
+     * @summary 模糊查询课程
+     * @description 根据关键词模糊查询课程
+     * @router get /api/searchCources
+     * @request header string *header
+     * @response 200 baseResponse 返回用户信息成功
+     */
+    async searchCource(){
+        const {ctx,service} = this;
+        const query = ctx.request.query;
+        const keyword = query.keyword || null;
+        const classGroup = query.classGroup || null;
+        const classType = query.classType || null;
+        const res = await service.course.searchCource(keyword,classGroup,classType);
+        ctx.helper.success({ctx,res});
+    }
 }
 module.exports = courseController

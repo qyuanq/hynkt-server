@@ -26,6 +26,8 @@ module.exports = app => {
   router.get('/api/goodVideos/:id',jwt,controller.course.getGoodVideo);
   router.get('/cource/:id',controller.course.getCource)
   router.get('/mealClass/:id',controller.course.getMealClass);
+  //模糊查询课程
+  router.get('/api/searchCource',jwt,controller.course.searchCource);
   // 课程答疑第一页
   router.get('/api/answerQuestions/:id/',jwt,controller.answerQuestion.getQuestion);
   // 课程答疑分页
@@ -84,5 +86,5 @@ module.exports = app => {
   router.delete('/api/myCart/:cartId',jwt,controller.cart.deleteCart);
   router.delete('/api/myCartAll',jwt,controller.cart.deleteCartAll);
   // 支付
-  router.get('/pay/wx',controller.pay.wxpay)
+  router.get('/api/pay/wx',jwt,controller.pay.wxpay)
 };

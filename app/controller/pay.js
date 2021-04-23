@@ -6,7 +6,8 @@ class payController extends Controller {
      */
     async wxpay(){
         const {ctx,service} = this;
-        await service.pay.wxPay();
+        const res = await service.pay.wxPay();
+        ctx.helper.success({ctx,res})
     }
 }
 
