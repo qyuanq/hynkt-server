@@ -31,7 +31,6 @@ class commentsService extends Service{
             attributes:['id','AnserquestionModelId','content','date','praise'],
             distinct: true  //去重，返回的 count 把 include 的数量算进去
         })
-       
         return {
             result:res.rows,
             countPage:Math.ceil(res.count / pageSize)

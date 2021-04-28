@@ -218,6 +218,22 @@ class CourseService extends Service {
             const resSingle = await single(conditions);
             const resMeal = await meal(conditions);
             return resSingle.concat(resMeal)
+
+            // 一次性返回2000条数据给前端
+            // let arr = resSingle;
+            // let res = resSingle[0].dataValues;
+            // for(let i =0; i<2000;i++){
+            //     const product = {
+            //         id:i+1,
+            //         name:i+res.name,
+            //         label:res.label,
+            //         head_picture:res.head_picture,
+            //         disc_price:res.disc_price
+            //     }
+            //     arr.push(product);
+            // }
+            // console.log(arr);
+            // return arr;
         }else if(classType === '单科班'){
             return await single(conditions)
         }else if(classType === '套餐班'){
